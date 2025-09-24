@@ -86,10 +86,30 @@
                             </td>
                             <td>
                                 @if($product->category)
-                                    <span class="badge bg-secondary">{{ $product->category->name }}</span>
-                                    @if($product->category->parent)
-                                        <br><small class="text-muted">{{ $product->category->getBreadcrumb() }}</small>
-                                    @endif
+                                    <div class="category-data position-relative">
+                                        <span class="badge bg-secondary">{{ $product->category->name }}</span>
+                                        <a href="#" class="ms-2 text-info small view-json" data-bs-toggle="tooltip" title="View Category Data">
+                                            <i class="bi bi-code-square"></i>
+                                        </a>
+                                        <div class="position-absolute bg-dark text-white p-2 rounded json-preview" style="display: none; z-index: 1000; min-width: 300px; max-width: 500px; white-space: pre-wrap;">
+                                            <code>
+                                                {{ json_encode([
+                                                    'id' => $product->category->id,
+                                                    'name' => $product->category->name,
+                                                    'slug' => $product->category->slug,
+                                                    'level' => $product->category->level,
+                                                    'path' => $product->category->path,
+                                                    'parent' => $product->category->parent ? [
+                                                        'id' => $product->category->parent->id,
+                                                        'name' => $product->category->parent->name
+                                                    ] : null,
+                                                    'breadcrumb' => $product->category->getBreadcrumb()->map(function($cat) {
+                                                        return ['id' => $cat->id, 'name' => $cat->name];
+                                                    })->toArray()
+                                                ], JSON_PRETTY_PRINT) }}
+                                            </code>
+                                        </div>
+                                    </div>
                                 @else
                                     <span class="badge bg-warning">Uncategorized</span>
                                 @endif
@@ -207,4 +227,62 @@
         </div>
     </div>
 </div>
+
+@push('styles')
+<style>
+    .json-preview {
+        display: none;
+        top: 100%;
+        left: 0;
+        background-color: #1e1e1e !important;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 12px;
+    }
+    .json-preview code {
+        color: #fff;
+    }
+    .category-data {
+        position: relative;
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    // Handle JSON preview
+    document.querySelectorAll('.view-json').forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Hide all other previews
+            document.querySelectorAll('.json-preview').forEach(function(preview) {
+                if (preview !== button.nextElementSibling) {
+                    preview.style.display = 'none';
+                }
+            });
+
+            // Toggle this preview
+            var preview = this.nextElementSibling;
+            preview.style.display = preview.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+
+    // Close JSON preview when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.category-data')) {
+            document.querySelectorAll('.json-preview').forEach(function(preview) {
+                preview.style.display = 'none';
+            });
+        }
+    });
+});
+</script>
+@endpush
 @endsection

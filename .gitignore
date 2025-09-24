@@ -1,0 +1,52 @@
+# Laravel specific
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.cache
+
+# Sensitive files
+/config/database.php
+*.sql
+*.db
+
+# Development files
+/tests/
+phpunit.xml
+.phpunit.result.cache
+
+# Backup files
+*.bak
+*.backup
+
+# Custom project files (keep these for deployment reference)
+# create_*.php files are for setup, keep them
+# *.php files in root are utility scripts

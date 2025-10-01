@@ -27,15 +27,27 @@
             </div>
             <div class="col-auto">
                 <form method="GET" class="d-flex gap-2">
-                    <select name="category_id" class="form-select form-select-sm" onchange="this.form.submit()">
-                        <option value="">All Categories</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" 
-                                    {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ str_repeat('— ', $category->level) }}{{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="d-flex gap-2">
+                        <select name="category_id" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <option value="">All Categories</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" 
+                                        {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ str_repeat('— ', $category->level) }}{{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <select name="brand_id" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <option value="">All Brands</option>
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}" 
+                                        {{ request('brand_id') == $brand->id ? 'selected' : '' }}>
+                                    {{ $brand->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <input type="search" name="search" class="form-control form-control-sm" 
                            placeholder="Search products..." value="{{ request('search') }}">
                     <button type="submit" class="btn btn-outline-secondary btn-sm">
@@ -54,6 +66,7 @@
                             <th>Image</th>
                             <th>Name</th>
                             <th>Category</th>
+                            <th>Brand</th>
                             <th>Price</th>
                             <th>Stock Status</th>
                             <th>Created</th>
@@ -112,6 +125,13 @@
                                     </div>
                                 @else
                                     <span class="badge bg-warning">Uncategorized</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($product->brand)
+                                    <span class="badge bg-info">{{ $product->brand->name }}</span>
+                                @else
+                                    <span class="text-muted">—</span>
                                 @endif
                             </td>
                             <td>

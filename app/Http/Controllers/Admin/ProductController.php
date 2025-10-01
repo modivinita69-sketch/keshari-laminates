@@ -14,11 +14,16 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $query = Product::with(['category.parent']);
+        $query = Product::with(['category.parent', 'brand']);
 
         // Filter by category if specified
         if (request('category_id')) {
             $query->where('category_id', request('category_id'));
+        }
+
+        // Filter by brand if specified
+        if (request('brand_id')) {
+            $query->where('brand_id', request('brand_id'));
         }
 
         // Search functionality
@@ -34,7 +39,12 @@ class ProductController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        return view('admin.products.index', compact('products', 'categories'));
+        // Get all brands for the filter dropdown
+        $brands = \App\Models\Brand::active()
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.products.index', compact('products', 'categories', 'brands'));
     }
 
     public function create()
@@ -45,7 +55,10 @@ class ProductController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        return view('admin.products.create', compact('categories'));
+        // Get all active brands
+        $brands = \App\Models\Brand::active()->orderBy('name')->get();
+
+        return view('admin.products.create', compact('categories', 'brands'));
     }
 
     public function store(Request $request)
@@ -110,7 +123,10 @@ class ProductController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        return view('admin.products.edit', compact('product', 'categories'));
+        // Get all active brands
+        $brands = \App\Models\Brand::active()->orderBy('name')->get();
+
+        return view('admin.products.edit', compact('product', 'categories', 'brands'));
     }
 
     public function update(Request $request, Product $product)

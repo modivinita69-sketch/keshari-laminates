@@ -132,6 +132,24 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="brand_id" class="form-label">Brand</label>
+                        <select class="form-select @error('brand_id') is-invalid @enderror" 
+                                id="brand_id" name="brand_id">
+                            <option value="">Select a brand</option>
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}" 
+                                        {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                    {{ $brand->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('brand_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <div class="form-text">Associate this product with a brand.</div>
+                    </div>
+
+                    <div class="mb-3">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" 
                                    id="is_featured" name="is_featured" value="1"

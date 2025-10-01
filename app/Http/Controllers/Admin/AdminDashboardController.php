@@ -23,10 +23,12 @@ class AdminDashboardController extends Controller
             'leaf_categories' => Category::whereHas('products')->count(),
             'total_admins' => Admin::count(),
             'company_info_entries' => CompanyInfo::count(),
+            'total_brands' => \App\Models\Brand::count(),
+            'active_brands' => \App\Models\Brand::where('is_active', true)->count(),
         ];
 
         // Get recent products
-        $recent_products = Product::with('category')
+        $recent_products = Product::with(['category', 'brand'])
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();

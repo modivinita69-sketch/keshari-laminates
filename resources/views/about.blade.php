@@ -1,41 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Keshari Laminates</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-orange: #ff6b35;
-            --secondary-orange: #f7941d;
-        }
-        .navbar {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
-        }
-        .navbar-brand, .navbar-nav .nav-link {
-            color: white !important;
-        }
-        .section-title {
-            color: var(--primary-orange);
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/"><i class="bi bi-building"></i> Keshari Laminates</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/products">Products</a>
-                <a class="nav-link active" href="/about">About Us</a>
-                <a class="nav-link" href="/contact">Contact</a>
-            </div>
-        </div>
-    </nav>
+@extends('layouts.app')
+
+@section('title', 'About Us')
+
+@section('content')
 
     <!-- Hero -->
     <div class="bg-light py-5">
@@ -54,23 +21,23 @@
                 <p>{{ $company_info['experience'] ?? 'Our commitment to quality and customer satisfaction has made us a trusted name in the laminate industry. We work directly with manufacturers to ensure our customers receive the best products at competitive wholesale prices.' }}</p>
             </div>
             <div class="col-lg-6 text-center">
-                <i class="bi bi-award" style="font-size: 8rem; color: var(--primary-orange);"></i>
+                <i class="bi bi-award" style="font-size: 8rem; color: var(--primary-color);"></i>
             </div>
         </div>
 
         <div class="row g-4 mb-5">
             <div class="col-md-4 text-center">
-                <i class="bi bi-bullseye" style="font-size: 4rem; color: var(--primary-orange);"></i>
+                <i class="bi bi-bullseye" style="font-size: 4rem; color: var(--primary-color);"></i>
                 <h4 class="mt-3">Our Mission</h4>
                 <p>{{ $company_info['mission'] ?? 'To provide premium quality laminates at competitive wholesale prices while maintaining the highest standards of customer service and product excellence.' }}</p>
             </div>
             <div class="col-md-4 text-center">
-                <i class="bi bi-eye" style="font-size: 4rem; color: var(--primary-orange);"></i>
+                <i class="bi bi-eye" style="font-size: 4rem; color: var(--primary-color);"></i>
                 <h4 class="mt-3">Our Vision</h4>
                 <p>{{ $company_info['vision'] ?? 'To be the most trusted and preferred wholesale distributor of laminates in the region, known for quality, reliability, and customer satisfaction.' }}</p>
             </div>
             <div class="col-md-4 text-center">
-                <i class="bi bi-heart" style="font-size: 4rem; color: var(--primary-orange);"></i>
+                <i class="bi bi-heart" style="font-size: 4rem; color: var(--primary-color);"></i>
                 <h4 class="mt-3">Our Values</h4>
                 <p>Quality, integrity, customer focus, and continuous improvement drive everything we do in our business relationships.</p>
             </div>
@@ -127,6 +94,4 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection

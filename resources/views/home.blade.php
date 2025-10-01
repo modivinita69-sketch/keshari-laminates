@@ -1,48 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keshari Laminates - Premium Quality Laminates</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-orange: #ff6b35;
-            --secondary-orange: #f7941d;
-            --light-orange: #fff5f2;
-            --dark-orange: #cc5529;
-        }
+@extends('layouts.app')
 
+@section('title', 'Keshari Laminates - Premium Quality Laminates')
+
+@section('styles')
+<style>
+        /* Remove padding-top on home page */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 0 !important;
         }
 
+        /* Ensure navbar is over the hero */
         .navbar {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
-            box-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
+            background: transparent;
+            box-shadow: none;
+            transition: all 0.3s ease;
         }
 
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: white !important;
-        }
-
-        .navbar-nav .nav-link {
-            color: rgba(255, 255, 255, 0.9) !important;
-            font-weight: 500;
-            margin: 0 10px;
-            transition: all 0.3s;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: white !important;
-            transform: translateY(-2px);
+        .navbar.scrolled {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 2px 10px rgba(var(--primary-color-rgb), 0.3);
         }
 
         .hero-section {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
             padding: 100px 0;
             position: relative;
@@ -68,7 +48,7 @@
         .btn-primary-orange {
             background-color: white;
             border-color: white;
-            color: var(--primary-orange);
+            color: var(--primary-color);
             font-weight: 600;
             padding: 12px 30px;
             border-radius: 50px;
@@ -76,15 +56,15 @@
         }
 
         .btn-primary-orange:hover {
-            background-color: var(--light-orange);
-            border-color: var(--light-orange);
-            color: var(--dark-orange);
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: white;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .section-title {
-            color: var(--primary-orange);
+            color: var(--primary-color);
             font-weight: bold;
             margin-bottom: 3rem;
             position: relative;
@@ -98,7 +78,7 @@
             transform: translateX(-50%);
             width: 60px;
             height: 3px;
-            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 2px;
         }
 
@@ -107,21 +87,21 @@
             border-radius: 15px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 5px 25px rgba(255, 107, 53, 0.1);
+            box-shadow: 0 5px 25px rgba(var(--primary-color-rgb), 0.1);
             transition: all 0.3s;
             border: 1px solid rgba(255, 107, 53, 0.1);
         }
 
         .category-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.2);
-            border-color: var(--primary-orange);
+            box-shadow: 0 15px 35px rgba(var(--primary-color-rgb), 0.2);
+            border-color: var(--primary-color);
         }
 
         .category-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -147,16 +127,16 @@
 
         .product-image {
             height: 200px;
-            background: var(--light-orange);
+            background: rgba(var(--primary-color-rgb), 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-orange);
+            color: var(--primary-color);
             font-size: 4rem;
         }
 
         .product-badge {
-            background: var(--primary-orange);
+            background: var(--primary-color);
             color: white;
             padding: 5px 15px;
             border-radius: 20px;
@@ -171,7 +151,7 @@
         }
 
         .footer h5 {
-            color: var(--secondary-orange);
+            color: var(--secondary-color);
             margin-bottom: 1rem;
         }
 
@@ -182,11 +162,11 @@
         }
 
         .footer a:hover {
-            color: var(--secondary-orange);
+            color: var(--secondary-color);
         }
 
         .stats-section {
-            background: var(--light-orange);
+            background: rgba(var(--primary-color-rgb), 0.1);
             padding: 4rem 0;
         }
 
@@ -198,7 +178,7 @@
         .stat-number {
             font-size: 3rem;
             font-weight: bold;
-            color: var(--primary-orange);
+            color: var(--primary-color);
             display: block;
         }
 
@@ -210,33 +190,7 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="bi bi-building"></i> Keshari Laminates
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('home') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('products') }}">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('about') }}">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('contact') }}">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -404,67 +358,37 @@
                 </div>
                 <div class="col-lg-6 text-center">
                     <div class="p-5">
-                        <i class="bi bi-award" style="font-size: 10rem; color: var(--primary-orange); opacity: 0.8;"></i>
+                        <i class="bi bi-award" style="font-size: 10rem; color: var(--primary-color); opacity: 0.8;"></i>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5><i class="bi bi-building me-2"></i>Keshari Laminates</h5>
-                    <p>Your trusted partner for premium quality laminates. We provide wholesale distribution of laminates, bells, promica, and decor plys.</p>
-                    <div class="d-flex gap-3">
-                        <a href="#"><i class="bi bi-facebook fs-4"></i></a>
-                        <a href="#"><i class="bi bi-instagram fs-4"></i></a>
-                        <a href="#"><i class="bi bi-twitter fs-4"></i></a>
-                        <a href="#"><i class="bi bi-linkedin fs-4"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 mb-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="{{ route('products') }}">Products</a></li>
-                        <li><a href="{{ route('about') }}">About Us</a></li>
-                        <li><a href="{{ route('contact') }}">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 mb-4">
-                    <h5>Product Categories</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Plain/Solid Laminates</a></li>
-                        <li><a href="#">Wooden Laminates</a></li>
-                        <li><a href="#">Abstract Laminates</a></li>
-                        <li><a href="#">Decor Plys</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 mb-4">
-                    <h5>Contact Info</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="bi bi-geo-alt me-2"></i>Business Address</li>
-                        <li><i class="bi bi-telephone me-2"></i>+91 XXXXX XXXXX</li>
-                        <li><i class="bi bi-envelope me-2"></i>info@kesharilaminates.com</li>
-                        <li><i class="bi bi-clock me-2"></i>Mon-Sat: 9AM-6PM</li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; 2025 Keshari Laminates. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-0">Designed with <i class="bi bi-heart-fill text-danger"></i> for better business</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+@endsection
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@push('scripts')
+<script>
+(function() {
+    // Get navbar element
+    var navbar = document.querySelector('.navbar');
+    
+    // Function to check scroll position and update navbar
+    function checkScroll() {
+        if (navbar) {
+            if (window.pageYOffset > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+    }
+    
+    // Add scroll event listener
+    if (window) {
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        // Check initial position
+        checkScroll();
+    }
+}());</script>
+@endpush

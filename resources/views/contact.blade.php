@@ -1,45 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Keshari Laminates</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-orange: #ff6b35;
-            --secondary-orange: #f7941d;
-        }
-        .navbar {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
-        }
-        .navbar-brand, .navbar-nav .nav-link {
-            color: white !important;
-        }
-        .section-title {
-            color: var(--primary-orange);
-            font-weight: bold;
-        }
-        .contact-card {
-            border: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/"><i class="bi bi-building"></i> Keshari Laminates</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/products">Products</a>
-                <a class="nav-link" href="/about">About Us</a>
-                <a class="nav-link active" href="/contact">Contact</a>
-            </div>
-        </div>
-    </nav>
+@extends('layouts.app')
+
+@section('title', 'Contact Us')
+
+@section('styles')
+<style>
+    .contact-card {
+        border: none;
+        box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.1);
+    }
+</style>
+@endsection
+
+@section('content')
+
 
     <!-- Hero -->
     <div class="bg-light py-5">
@@ -198,13 +171,14 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Simple form validation
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.\n\nNote: This is a demo form. In production, this would be connected to a backend service.');
-        });
-    </script>
-</body>
-</html>
+@endsection
+
+@push('scripts')
+<script>
+    // Simple form validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Thank you for your message! We will get back to you soon.\n\nNote: This is a demo form. In production, this would be connected to a backend service.');
+    });
+</script>
+@endpush

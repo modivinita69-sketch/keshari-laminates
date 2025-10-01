@@ -1,53 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Keshari Laminates - Premium Quality Laminates</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-orange: #ff6b35;
-            --secondary-orange: #f7941d;
-            --light-orange: #fff5f2;
-            --dark-orange: #cc5529;
-        }
+@extends('layouts.app')
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+@section('title', 'Welcome to Keshari Laminates - Premium Quality Laminates')
 
-        .navbar {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
-            box-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: white !important;
-        }
-
-        .navbar-nav .nav-link {
-            color: rgba(255, 255, 255, 0.9) !important;
-            font-weight: 500;
-            margin: 0 10px;
-            transition: all 0.3s;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: white !important;
-            transform: translateY(-2px);
-        }
-
+@section('styles')
+<style>
         .hero-section {
             background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
             color: white;
             padding: 100px 0;
             position: relative;
             overflow: hidden;
-            margin-top: 76px;
+            margin-top: 0;
         }
 
         .hero-section::before {
@@ -69,7 +32,7 @@
         .btn-primary-orange {
             background-color: white;
             border-color: white;
-            color: var(--primary-orange);
+            color: var(--primary-color);
             font-weight: 600;
             padding: 12px 30px;
             border-radius: 50px;
@@ -77,15 +40,15 @@
         }
 
         .btn-primary-orange:hover {
-            background-color: var(--light-orange);
-            border-color: var(--light-orange);
-            color: var(--dark-orange);
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .section-title {
-            color: var(--primary-orange);
+            color: var(--primary-color);
             font-weight: bold;
             margin-bottom: 3rem;
             position: relative;
@@ -99,7 +62,7 @@
             transform: translateX(-50%);
             width: 60px;
             height: 3px;
-            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 2px;
         }
 
@@ -108,22 +71,22 @@
             border-radius: 15px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 5px 25px rgba(255, 107, 53, 0.1);
+            box-shadow: 0 5px 25px rgba(var(--primary-color-rgb), 0.1);
             transition: all 0.3s;
-            border: 1px solid rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.1);
             margin-bottom: 2rem;
         }
 
         .category-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.2);
-            border-color: var(--primary-orange);
+            box-shadow: 0 15px 35px rgba(var(--primary-color-rgb), 0.2);
+            border-color: var(--primary-color);
         }
 
         .category-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -134,7 +97,7 @@
         }
 
         .stats-section {
-            background: var(--light-orange);
+            background: rgba(var(--primary-color-rgb), 0.1);
             padding: 4rem 0;
         }
 
@@ -146,7 +109,7 @@
         .stat-number {
             font-size: 3rem;
             font-weight: bold;
-            color: var(--primary-orange);
+            color: var(--primary-color);
             display: block;
         }
 
@@ -179,36 +142,6 @@
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="bi bi-building"></i> Keshari Laminates
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/login">Admin</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -417,6 +350,52 @@
         </div>
     </section>
 
+    <!-- Brands Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Our Trusted Brands</h2>
+                <p class="lead text-muted">We partner with the best laminate manufacturers in the industry</p>
+            </div>
+            @if($brands && count($brands) > 0)
+                <div class="row g-4 justify-content-center align-items-center">
+                    @foreach($brands as $brand)
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center p-4">
+                                    @if($brand->logo)
+                                        <img src="{{ asset('storage/' . $brand->logo) }}" 
+                                             alt="{{ $brand->name }}" 
+                                             class="img-fluid mb-3"
+                                             style="max-height: 80px; object-fit: contain;">
+                                    @else
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-center mb-3" 
+                                             style="height: 80px;">
+                                            <i class="bi bi-building text-muted" style="font-size: 2rem;"></i>
+                                        </div>
+                                    @endif
+                                    <h5 class="card-title">{{ $brand->name }}</h5>
+                                    <p class="card-text small text-muted mb-3">{{ Str::limit($brand->description, 100) }}</p>
+                                    <div class="small text-muted">
+                                        <i class="bi bi-box"></i> {{ $brand->products->count() }} Products
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center">
+                    <div class="mb-4">
+                        <i class="bi bi-building" style="font-size: 4rem; color: var(--primary-orange); opacity: 0.5;"></i>
+                    </div>
+                    <h4>Brands Coming Soon</h4>
+                    <p class="text-muted">Our brand partners will be displayed here soon.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
     <!-- Stats Section -->
     <section class="stats-section">
         <div class="container">
@@ -477,60 +456,4 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5><i class="bi bi-building me-2"></i>Keshari Laminates</h5>
-                    <p>Your trusted partner for premium quality laminates. We provide wholesale distribution of laminates, bells, promica, and decor plys.</p>
-                    <div class="d-flex gap-3">
-                        <a href="#"><i class="bi bi-facebook fs-4"></i></a>
-                        <a href="#"><i class="bi bi-instagram fs-4"></i></a>
-                        <a href="#"><i class="bi bi-twitter fs-4"></i></a>
-                        <a href="#"><i class="bi bi-linkedin fs-4"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 mb-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/products">Products</a></li>
-                        <li><a href="/about">About Us</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 mb-4">
-                    <h5>Product Categories</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="/products">Plain/Solid Laminates</a></li>
-                        <li><a href="/products">Wooden Laminates</a></li>
-                        <li><a href="/products">Abstract Laminates</a></li>
-                        <li><a href="/products">Decor Plys</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 mb-4">
-                    <h5>Contact Info</h5>
-                    <ul class="list-unstyled">
-                        <li><i class="bi bi-geo-alt me-2"></i>Industrial Area, Your City</li>
-                        <li><i class="bi bi-telephone me-2"></i>+91 98765 43210</li>
-                        <li><i class="bi bi-envelope me-2"></i>info@kesharilaminates.com</li>
-                        <li><i class="bi bi-clock me-2"></i>Mon-Sat: 9AM-6PM</li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; 2025 Keshari Laminates. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-0">Designed with <i class="bi bi-heart-fill text-danger"></i> for better business</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection

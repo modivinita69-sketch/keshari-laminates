@@ -6,22 +6,16 @@
     <title>@yield('title', 'Keshari Laminates - Premium Quality Laminates')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ route('theme.css') }}" rel="stylesheet">
     <style>
-        :root {
-            --primary-orange: #ff6b35;
-            --secondary-orange: #f7941d;
-            --light-orange: #fff5f2;
-            --dark-orange: #cc5529;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding-top: 76px; /* Account for fixed navbar */
         }
 
         .navbar {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
-            box-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 2px 10px rgba(var(--primary-color-rgb), 0.3);
         }
 
         .navbar-brand {
@@ -43,28 +37,24 @@
         }
 
         .btn-primary {
-            background-color: var(--primary-orange);
-            border-color: var(--primary-orange);
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
         }
 
         .btn-primary:hover {
-            background-color: var(--secondary-orange);
-            border-color: var(--secondary-orange);
-        }
-
-        .text-primary {
-            color: var(--primary-orange) !important;
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
         }
 
         .footer {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
             padding: 60px 0 20px;
             margin-top: 80px;
         }
 
         .footer h5 {
-            color: var(--primary-orange);
+            color: white;
             font-weight: bold;
             margin-bottom: 20px;
         }
@@ -76,20 +66,20 @@
         }
 
         .footer a:hover {
-            color: var(--primary-orange);
+            color: white;
         }
 
         .breadcrumb-item a {
-            color: var(--primary-orange);
+            color: var(--primary-color);
             text-decoration: none;
         }
 
         .breadcrumb-item a:hover {
-            color: var(--secondary-orange);
+            color: var(--secondary-color);
         }
 
         .breadcrumb-item.active {
-            color: #6c757d;
+            color: var(--text-color);
         }
 
         @yield('styles')
@@ -99,8 +89,9 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="bi bi-building"></i> Keshari Laminates
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
+                <img src="{{ asset('storage/images/logo.png') }}" alt="Keshari Laminates" class="me-2" style="height: 60px; width: auto;">
+                <span class="d-none d-sm-inline">Keshari Laminates</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -108,16 +99,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
+                        <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('products*') ? 'active' : '' }}" href="{{ route('products') }}">Products</a>
+                        <a class="nav-link {{ str_starts_with(Route::currentRouteName(), 'products') ? 'active' : '' }}" href="{{ route('products') }}">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About Us</a>
+                        <a class="nav-link {{ Route::currentRouteName() == 'about' ? 'active' : '' }}" href="{{ route('about') }}">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a>
+                        <a class="nav-link {{ Route::currentRouteName() == 'contact' ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.login') }}">Admin</a>
                     </li>
                 </ul>
             </div>

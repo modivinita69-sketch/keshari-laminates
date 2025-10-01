@@ -35,6 +35,13 @@ class HomeController extends Controller
             ->orderBy('sort_order')
             ->get();
 
+        // Get active brands
+        $brands = \App\Models\Brand::where('is_active', true)
+            ->withCount('products')
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
+
         // Get company information (with fallbacks)
         $company_info = [
             'about_us' => CompanyInfo::getValue('about_us', 'Keshari Laminates - Your trusted partner in quality laminates'),
@@ -42,7 +49,7 @@ class HomeController extends Controller
             'hero_subtitle' => CompanyInfo::getValue('hero_subtitle', 'Wholesale distributor of premium laminates, bells, promica, and decor plys'),
         ];
 
-        return view('welcome', compact('featured_products', 'categories', 'leaf_categories', 'company_info'));
+        return view('welcome', compact('featured_products', 'categories', 'leaf_categories', 'company_info', 'brands'));
     }
 
     public function about()

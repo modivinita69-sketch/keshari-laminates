@@ -1,168 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - Keshari Laminates</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-orange: #ff6b35;
-            --secondary-orange: #f7941d;
-            --light-orange: #fff5f2;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .navbar {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
-        }
-        
-        .navbar-brand, .navbar-nav .nav-link {
-            color: white !important;
-        }
-        
-        .navbar-nav .nav-link:hover {
-            color: rgba(255, 255, 255, 0.8) !important;
-        }
-        
-        .section-title {
-            color: var(--primary-orange);
-            font-weight: bold;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
-            border-radius: 2px;
-        }
-        
-        .product-card {
-            border: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border-radius: 15px;
-            overflow: hidden;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        }
-        
-        .product-image {
-            height: 200px;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .filter-section {
-            background: var(--light-orange);
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-        }
-        
-        .btn-outline-orange {
-            color: var(--primary-orange);
-            border-color: var(--primary-orange);
-        }
-        
-        .btn-outline-orange:hover {
-            color: white;
-            background-color: var(--primary-orange);
-            border-color: var(--primary-orange);
-        }
-        
-        .btn-orange {
-            color: white;
-            background-color: var(--primary-orange);
-            border-color: var(--primary-orange);
-        }
-        
-        .btn-orange:hover {
-            color: white;
-            background-color: var(--secondary-orange);
-            border-color: var(--secondary-orange);
-        }
-        
-        .btn-outline-orange {
-            color: var(--primary-orange);
-            background-color: transparent;
-            border-color: var(--primary-orange);
-        }
-        
-        .btn-outline-orange:hover {
-            color: white;
-            background-color: var(--primary-orange);
-            border-color: var(--primary-orange);
-        }
-        
-        .badge-category {
-            background-color: var(--secondary-orange);
-            color: white;
-        }
-        
-        .pagination .page-link {
-            color: var(--primary-orange);
-        }
-        
-        .pagination .page-item.active .page-link {
-            background-color: var(--primary-orange);
-            border-color: var(--primary-orange);
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="bi bi-building"></i> Keshari Laminates
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('products') }}">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('about') }}">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('contact') }}">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin/login">Admin</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+@extends('layouts.app')
+
+@section('title', isset($selected_category) ? $selected_category->name : (isset($category) ? $category->name : 'Products'))
+
+@section('styles')
+<style>
+    .product-card {
+        border: none;
+        box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.1);
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(var(--primary-color-rgb), 0.15);
+    }
+    
+    .product-image {
+        height: 200px;
+        background: #f8f9fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .filter-section {
+        background: rgba(var(--primary-color-rgb), 0.1);
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+    
+    .btn-outline-orange {
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    .btn-outline-orange:hover {
+        color: white;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    .btn-orange {
+        color: white;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    .btn-orange:hover {
+        color: white;
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+    }
+    
+    .badge-category {
+        background-color: var(--secondary-color);
+        color: white;
+    }
+    
+    .pagination .page-link {
+        color: var(--primary-color);
+    }
+    
+    .pagination .page-item.active .page-link {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+</style>
+@endsection
+
+@section('content')
 
     <!-- Hero Section -->
     <div class="bg-light py-5">
@@ -398,7 +313,7 @@
             <!-- No Products Found -->
             <div class="text-center py-5">
                 <div class="mb-4">
-                    <i class="bi bi-search" style="font-size: 4rem; color: var(--primary-orange); opacity: 0.5;"></i>
+                    <i class="bi bi-search" style="font-size: 4rem; color: var(--primary-color); opacity: 0.5;"></i>
                 </div>
                 <h4>No Products Found</h4>
                 @if(request()->hasAny(['category', 'search', 'sort']))
@@ -414,6 +329,4 @@
         @endif
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection

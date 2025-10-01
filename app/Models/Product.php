@@ -21,11 +21,17 @@ class Product extends Model
         'grade',
         'price',
         'category_id',
+        'brand_id',
         'is_active',
         'is_featured',
         'sort_order',
         'specifications'
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
     protected $casts = [
         'is_active' => 'boolean',

@@ -21,6 +21,13 @@ class Category extends Model
         'sort_order'
     ];
 
+    // Add brands relationship
+    public function brands()
+    {
+        return $this->belongsToMany(Brand::class, 'brand_category')
+                    ->withTimestamps();
+    }
+
     protected $casts = [
         'is_active' => 'boolean',
     ];

@@ -4,10 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CompanyInfoController;
+
+// Theme CSS
+Route::get('/css/theme.css', [ThemeController::class, 'css'])->name('theme.css');
 
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -54,8 +58,23 @@ Route::prefix('admin')->group(function () {
         ]);
         Route::delete('/products/images/{image}', [AdminProductController::class, 'deleteImage'])->name('admin.products.images.destroy');
         
+        // Brand management
+        Route::resource('brands', \App\Http\Controllers\Admin\BrandController::class)->names([
+            'index' => 'admin.brands.index',
+            'create' => 'admin.brands.create',
+            'store' => 'admin.brands.store',
+            'show' => 'admin.brands.show',
+            'edit' => 'admin.brands.edit',
+            'update' => 'admin.brands.update',
+            'destroy' => 'admin.brands.destroy',
+        ]);
+
         // Company information
         Route::get('/company-info', [CompanyInfoController::class, 'index'])->name('admin.company-info.index');
         Route::post('/company-info', [CompanyInfoController::class, 'update'])->name('admin.company-info.update');
+
+        // Theme settings
+        Route::get('/theme-settings', [\App\Http\Controllers\Admin\ThemeSettingsController::class, 'index'])->name('admin.theme-settings.index');
+        Route::post('/theme-settings', [\App\Http\Controllers\Admin\ThemeSettingsController::class, 'update'])->name('admin.theme-settings.update');
     });
 });

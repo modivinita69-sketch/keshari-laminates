@@ -2,10 +2,12 @@
 
 @section('title', 'Welcome to Keshari Laminates - Premium Quality Laminates')
 
-@section('styles')
-<style>
+@push('styles')
+    <style>
         .hero-section {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
+            background: var(--primary-color);
+            background: -webkit-linear-gradient(315deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
             padding: 100px 0;
             position: relative;
@@ -140,9 +142,9 @@
             color: var(--secondary-orange);
         }
     </style>
-</head>
-<body>
+@endpush
 
+@section('content')
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container hero-content">
@@ -228,49 +230,6 @@
                             </div>
                         </div>
                     @endforeach
-                </div>
-                
-                <!-- Category Tree Navigation -->
-                <div class="row mt-5">
-                    <div class="col-12">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-header bg-light">
-                                <h5 class="mb-0"><i class="bi bi-diagram-3 me-2"></i>Complete Category Structure</h5>
-                            </div>
-                            <div class="card-body">
-                                @foreach($categories as $rootCategory)
-                                    <div class="category-tree mb-3">
-                                        <div class="fw-bold text-primary mb-2">
-                                            <i class="bi bi-folder me-1"></i>
-                                            <a href="{{ route('products', ['category' => $rootCategory->path ?: $rootCategory->slug]) }}" 
-                                               class="text-decoration-none">{{ $rootCategory->name }}</a>
-                                        </div>
-                                        @if($rootCategory->children && count($rootCategory->children) > 0)
-                                            @foreach($rootCategory->children as $child)
-                                                <div class="ms-4 mb-2">
-                                                    <i class="bi bi-folder-fill me-1 text-secondary"></i>
-                                                    <a href="{{ route('products', ['category' => $child->path ?: $child->slug]) }}" 
-                                                       class="text-decoration-none">{{ $child->name }}</a>
-                                                    @if($child->children && count($child->children) > 0)
-                                                        @foreach($child->children as $grandchild)
-                                                            <div class="ms-4">
-                                                                <i class="bi bi-file-earmark me-1 text-muted"></i>
-                                                                <a href="{{ route('products', ['category' => $grandchild->path ?: $grandchild->slug]) }}" 
-                                                                   class="text-decoration-none small">{{ $grandchild->name }}</a>
-                                                                <small class="text-muted">({{ $grandchild->products()->count() }} products)</small>
-                                                            </div>
-                                                        @endforeach
-                                                    @else
-                                                        <small class="text-muted ms-3">({{ $child->products()->count() }} products)</small>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
                 </div>
             @else
                 <div class="col-12 text-center">

@@ -5,30 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Keshari Laminates</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ route('theme.css') }}" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7941d 100%);
+            background: var(--primary-color);
+            background: -webkit-linear-gradient(315deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             min-height: 100vh;
         }
         .login-card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(var(--primary-color-rgb), 0.1);
+            backdrop-filter: blur(10px);
         }
         .brand-logo {
-            color: #ff6b35;
+            color: var(--primary-color);
             font-weight: bold;
             font-size: 2rem;
         }
         .btn-orange {
-            background-color: #ff6b35;
-            border-color: #ff6b35;
+            background: var(--primary-color);
+            background: -webkit-linear-gradient(315deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
             color: white;
+            transition: all 0.3s ease;
         }
         .btn-orange:hover {
-            background-color: #e55a2e;
-            border-color: #e55a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.3);
             color: white;
+        }
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.25);
         }
     </style>
 </head>

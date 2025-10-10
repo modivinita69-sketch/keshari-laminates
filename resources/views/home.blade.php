@@ -198,7 +198,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <h1 class="display-4 fw-bold mb-4">
-                        {{ $company_info['hero_title'] ?? 'Premium Quality Laminates' }}
+                        {{ $company_info['hero_title'] ?? 'Premium Quality Laminatesss' }}
                     </h1>
                     <p class="lead mb-4">
                         {{ $company_info['hero_subtitle'] ?? 'Wholesale distributor of premium laminates, bells, promica, and decor plys for all your interior design needs.' }}

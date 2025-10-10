@@ -82,8 +82,8 @@
             color: var(--text-color);
         }
 
-        @yield('styles')
     </style>
+    @stack('styles')
 </head>
 <body>
     <!-- Navigation -->

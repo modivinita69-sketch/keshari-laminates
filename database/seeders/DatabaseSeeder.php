@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             CompanyInfoSeeder::class,
             BrandSeeder::class,
             ThemeSettingSeeder::class,
+            DemoProductSeeder::class,
+            HeroSliderSeeder::class,
         ]);
     }
 }

@@ -3,32 +3,219 @@
 @section('title', 'Welcome to Keshari Laminates - Premium Quality Laminates')
 
 @push('styles')
+    <!-- Add Swiper's CSS and Animate.css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        .hero-section {
-            background: var(--primary-color);
-            background: -webkit-linear-gradient(315deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-            margin-top: 0;
+        /* Hero Slider         <!-- Background Slider -->
+        <div class="hero-slider swiper">
+            <div class="swiper-wrapper">
+                @forelse($hero_slides as $slide)
+                    <div class="swiper-slide">
+                        <img src="{{ asset('storage/' . $slide->image_path) }}" 
+                             alt="{{ $slide->title }}"
+                             @if($slide->title || $slide->subtitle)
+                             title="{{ $slide->title }} - {{ $slide->subtitle }}"
+                             @endif
+                        >
+                    </div>
+                @empty
+                    <div class="swiper-slide">
+                        <div class="default-hero-image" 
+                             style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-layers text-white" style="font-size: 8rem; opacity: 0.1;"></i>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+            @if(count($hero_slides) > 1)
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            @endif
+        </div>     .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
-        .hero-section::before {
+        .hero-slider .swiper-slide {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-slider .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .hero-slider::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,100 1000,0 1000,100"/></svg>') no-repeat bottom;
-            background-size: cover;
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.7) 0%, 
+                rgba(0, 0, 0, 0.5) 100%);
+            z-index: 1;
+        }
+
+        /* Swiper Navigation Styles */
+        .hero-slider .swiper-button-next,
+        .hero-slider .swiper-button-prev {
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .hero-slider .swiper-button-next:hover,
+        .hero-slider .swiper-button-prev:hover {
+            background: rgba(var(--primary-color-rgb), 0.8);
+        }
+
+        .hero-slider .swiper-button-next:after,
+        .hero-slider .swiper-button-prev:after {
+            font-size: 1.5rem;
+        }
+
+        .hero-slider .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background: white;
+            opacity: 0.5;
+        }
+
+        .hero-slider .swiper-pagination-bullet-active {
+            opacity: 1;
+            background: var(--primary-color);
+        }
+
+        .default-hero-image {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Animate on scroll utility classes */
+        .animate {
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        .animate.active {
+            opacity: 1;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        .hero-section {
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            background: #000;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            animation: fadeInRight 1s ease-out;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content p {
+            animation: fadeInRight 1s ease-out 0.2s backwards;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content .btn {
+            animation: fadeInRight 1s ease-out 0.4s backwards;
+        }
+
+        .hero-image {
+            animation: float 6s ease-in-out infinite;
+            display: none;
         }
 
         .btn-primary-orange {
@@ -74,9 +261,16 @@
             padding: 2rem;
             text-align: center;
             box-shadow: 0 5px 25px rgba(var(--primary-color-rgb), 0.1);
-            transition: all 0.3s;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(var(--primary-color-rgb), 0.1);
             margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .category-card.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .category-card:hover {
@@ -106,6 +300,14 @@
         .stat-item {
             text-align: center;
             padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-item.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .stat-number {
@@ -147,27 +349,55 @@
 @section('content')
     <!-- Hero Section -->
     <section class="hero-section">
+        <!-- Background Slider -->
+        <div class="hero-slider swiper">
+            <div class="swiper-wrapper">
+                @forelse($hero_slides as $slide)
+                    <div class="swiper-slide">
+                        <img src="{{ asset($slide->image_path) }}" 
+                             alt="{{ $slide->title }}"
+                             @if($slide->title || $slide->subtitle)
+                             title="{{ $slide->title }} - {{ $slide->subtitle }}"
+                             @endif
+                        >
+                        <div class="slide-content">
+                            <div class="container">
+                                <h2 class="slide-title">{{ $slide->title }}</h2>
+                                <p class="slide-subtitle">{{ $slide->subtitle }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="swiper-slide">
+                        <div class="default-hero-image">
+                            <i class="bi bi-layers text-white" style="font-size: 8rem; opacity: 0.1;"></i>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+            @if(count($hero_slides) > 1)
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            @endif
+        </div>
+
         <div class="container hero-content">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="display-4 fw-bold mb-4">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInUp">
                         {{ $company_info['hero_title'] ?? 'Premium Quality Laminates' }}
                     </h1>
-                    <p class="lead mb-4">
+                    <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">
                         {{ $company_info['hero_subtitle'] ?? 'Wholesale distributor of premium laminates, bells, promica, and decor plys for all your interior design needs.' }}
                     </p>
-                    <div class="d-flex flex-wrap gap-3">
-                        <a href="/products" class="btn btn-primary-orange btn-lg">
+                    <div class="d-flex flex-wrap gap-3 justify-content-center animate__animated animate__fadeInUp animate__delay-2s">
+                        <a href="/products" class="btn btn-primary-orange btn-lg hover-scale px-4 py-3">
                             <i class="bi bi-box me-2"></i>View Products
                         </a>
-                        <a href="/contact" class="btn btn-outline-light btn-lg">
+                        <a href="/contact" class="btn btn-outline-light btn-lg hover-scale px-4 py-3">
                             <i class="bi bi-telephone me-2"></i>Get Quote
                         </a>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <div class="hero-image">
-                        <i class="bi bi-layers" style="font-size: 15rem; opacity: 0.3;"></i>
                     </div>
                 </div>
             </div>
@@ -177,7 +407,7 @@
     <!-- Categories Section -->
     <section class="py-5">
         <div class="container">
-            <div class="text-center mb-5">
+            <div class="text-center mb-5 animate">
                 <h2 class="section-title">Our Product Categories</h2>
                 <p class="lead text-muted">Explore our wide range of premium laminate categories</p>
             </div>
@@ -415,4 +645,58 @@
         </div>
     </section>
 
+    <!-- Add Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    
+    <!-- Animation JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Swiper
+            const heroSlider = new Swiper('.hero-slider', {
+                effect: 'fade',
+                speed: 1500,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                loop: true,
+                fadeEffect: {
+                    crossFade: true
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                }
+            });
+            // Animate elements when they enter the viewport
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            // Observe all elements with animate class
+            document.querySelectorAll('.animate, .category-card, .stat-item').forEach((el) => {
+                observer.observe(el);
+            });
+
+            // Add stagger delay to category cards
+            document.querySelectorAll('.category-card').forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.1}s`;
+            });
+
+            // Add stagger delay to stat items
+            document.querySelectorAll('.stat-item').forEach((stat, index) => {
+                stat.style.transitionDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
 @endsection

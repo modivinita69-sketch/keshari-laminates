@@ -69,6 +69,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.hero-slider.*') ? 'active' : '' }}" 
+                       href="{{ route('admin.hero-slider.index') }}">
+                        <i class="bi bi-images"></i> Hero Slider
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.brands.*') ? 'active' : '' }}" 
                        href="{{ route('admin.brands.index') }}">
                         <i class="bi bi-building"></i> Brands

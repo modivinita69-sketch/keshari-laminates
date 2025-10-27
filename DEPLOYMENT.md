@@ -1,4 +1,127 @@
-# Keshari Laminates - Deployment Guide
+# Deployment Guide for Keshari Laminates on GoDaddy
+
+## Pre-deployment Steps
+
+1. **Optimize Laravel Project**
+   ```bash
+   composer install --optimize-autoloader --no-dev
+   php artisan config:cache
+   php artisan route:cache
+   php artisan view:cache
+   ```
+
+## GoDaddy Hosting Setup
+
+1. **PHP Version Setup**
+   - Login to your GoDaddy cPanel
+   - Navigate to "Software" > "MultiPHP Manager"
+   - Set PHP version to 8.1 or higher for your domain
+
+2. **Domain Configuration**
+   - Set your document root to `/public_html`
+   - Point your domain to the `public` folder of your Laravel project
+
+3. **Database Setup**
+   - Go to MySQL Databases in cPanel
+   - Create a new database
+   - Create a new database user
+   - Add user to database with all privileges
+   - Note down these credentials for `.env` file
+
+4. **File Upload**
+   - Upload all project files to `/public_html`
+   - Make sure the `public` folder contents go to `public_html`
+   - Rest of the Laravel files should be in a folder one level up
+
+5. **Environment Setup**
+   ```bash
+   # Create .env file with these settings
+   APP_NAME="Keshari Laminates"
+   APP_ENV=production
+   APP_DEBUG=false
+   APP_URL=https://yourdomain.com
+
+   DB_CONNECTION=mysql
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_database_user
+   DB_PASSWORD=your_database_password
+
+   FILESYSTEM_DISK=public
+   ```
+
+6. **Directory Structure**
+   ```
+   public_html/          # Laravel public directory contents
+   keshari/             # Rest of Laravel files
+   ```
+
+7. **File Permissions**
+   ```bash
+   chmod -R 755 public_html
+   chmod -R 755 keshari
+   chmod -R 777 keshari/storage
+   chmod -R 777 keshari/bootstrap/cache
+   ```
+
+8. **Post-Deployment Commands**
+   ```bash
+   # Run these commands in SSH or through cPanel PHP CLI
+   php artisan storage:link
+   php artisan migrate --force
+   php artisan db:seed
+   ```
+
+## Important Notes
+
+1. Make sure to update the `.htaccess` file in `public_html` to handle Laravel routing
+2. Set up SSL certificate for HTTPS
+3. Configure proper backup solution
+4. Set up proper mail server settings in `.env`
+5. Configure cache and session drivers appropriately
+
+## Common Issues
+
+1. **500 Server Error**
+   - Check storage folder permissions
+   - Verify .env file exists and is configured correctly
+   - Check error logs in cPanel
+
+2. **404 Not Found**
+   - Verify .htaccess file is present and correct
+   - Check if mod_rewrite is enabled
+   - Confirm routing configuration
+
+3. **Image Upload Issues**
+   - Verify storage symlink is created
+   - Check folder permissions
+   - Confirm proper path configuration
+
+## Security Checklist
+
+1. Ensure APP_DEBUG is set to false
+2. Use HTTPS only
+3. Set proper file permissions
+4. Keep sensitive files outside public directory
+5. Use strong database passwords
+6. Enable CSRF protection
+7. Configure proper session settings
+
+## Backup Strategy
+
+1. Regular database backups through cPanel
+2. File system backups of:
+   - Uploaded images
+   - Configuration files
+   - Custom code changes
+
+## Monitoring
+
+1. Set up error logging
+2. Configure backup notifications
+3. Monitor disk space usage
+4. Keep track of PHP and Laravel versions for updates
 
 Complete guide for deploying the Keshari Laminates Laravel application.
 

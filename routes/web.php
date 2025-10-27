@@ -76,5 +76,17 @@ Route::prefix('admin')->group(function () {
         // Theme settings
         Route::get('/theme-settings', [\App\Http\Controllers\Admin\ThemeSettingsController::class, 'index'])->name('admin.theme-settings.index');
         Route::post('/theme-settings', [\App\Http\Controllers\Admin\ThemeSettingsController::class, 'update'])->name('admin.theme-settings.update');
+
+        // Hero Slider Management
+        Route::resource('hero-slider', \App\Http\Controllers\Admin\HeroSliderController::class)->names([
+            'index' => 'admin.hero-slider.index',
+            'create' => 'admin.hero-slider.create',
+            'store' => 'admin.hero-slider.store',
+            'edit' => 'admin.hero-slider.edit',
+            'update' => 'admin.hero-slider.update',
+            'destroy' => 'admin.hero-slider.destroy'
+        ]);
+        Route::post('/hero-slider/update-order', [\App\Http\Controllers\Admin\HeroSliderController::class, 'updateOrder'])
+            ->name('admin.hero-slider.update-order');
     });
 });

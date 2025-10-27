@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\CompanyInfo;
+use App\Models\HeroSlider;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        // Get hero slider images
+        $hero_slides = HeroSlider::getActiveSlides();
+
         // Get featured products with their primary images and categories
         $featured_products = Product::where('is_active', true)
             ->with(['images' => function($query) {
@@ -49,7 +53,7 @@ class HomeController extends Controller
             'hero_subtitle' => CompanyInfo::getValue('hero_subtitle', 'Wholesale distributor of premium laminates, bells, promica, and decor plys'),
         ];
 
-        return view('welcome', compact('featured_products', 'categories', 'leaf_categories', 'company_info', 'brands'));
+        return view('welcome', compact('featured_products', 'categories', 'leaf_categories', 'company_info', 'brands', 'hero_slides'));
     }
 
     public function about()

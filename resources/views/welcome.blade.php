@@ -6,6 +6,8 @@
     <!-- Add Swiper's CSS and Animate.css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="{{ asset('css/sections.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/reveal.css') }}">
     <style>
         /* Hero Slider         <!-- Background Slider -->
         <div class="hero-slider swiper">
@@ -405,7 +407,7 @@
     </section>
 
     <!-- Categories Section -->
-    <section class="py-5">
+    <section class="py-5 reveal-section">
         <div class="container">
             <div class="text-center mb-5 animate">
                 <h2 class="section-title">Our Product Categories</h2>
@@ -416,7 +418,7 @@
                 <div class="row g-4">
                     @foreach($leaf_categories as $category)
                         <div class="col-md-6 col-lg-4">
-                            <div class="category-card">
+                            <div class="category-card section-fade-up stagger-animation">
                                 <div class="category-icon">
                                     @switch(strtolower($category->name))
                                         @case('plain/solid laminates')
@@ -446,17 +448,22 @@
                                             <i class="bi bi-grid"></i>
                                     @endswitch
                                 </div>
-                                <h4>{{ $category->name }}</h4>
-                                @if($category->parent)
-                                    <small class="text-muted d-block mb-2">{{ $category->getFullName() }}</small>
-                                @endif
-                                <p class="text-muted">{{ $category->description ?? 'Premium quality ' . strtolower($category->name) }}</p>
-                                <div class="mb-3">
-                                    <span class="badge bg-success">{{ $category->products()->count() }} Products</span>
+                                <div class="category-content p-4">
+                                    <h4>{{ $category->name }}</h4>
+                                    @if($category->parent)
+                                        <small class="text-muted d-block mb-2">{{ $category->getFullName() }}</small>
+                                    @endif
+                                    <p class="text-muted mb-4">{{ $category->description ?? 'Premium quality ' . strtolower($category->name) }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-box me-1"></i>{{ $category->products()->count() }} Products
+                                        </span>
+                                        <a href="{{ route('products', ['category' => $category->path ?: $category->slug]) }}" 
+                                           class="btn btn-outline-primary btn-sm">
+                                            View Products <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                                <a href="{{ route('products', ['category' => $category->path ?: $category->slug]) }}" class="btn btn-outline-primary">
-                                    View Products <i class="bi bi-arrow-right"></i>
-                                </a>
                             </div>
                         </div>
                     @endforeach
@@ -471,7 +478,7 @@
     </section>
 
     <!-- Featured Products Section -->
-    <section class="py-5 bg-light">
+    <section class="py-5 bg-light reveal-section">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="section-title">Featured Products</h2>
@@ -481,31 +488,30 @@
                 <div class="row g-4">
                     @foreach($featured_products->take(8) as $product)
                         <div class="col-md-6 col-lg-3">
-                            <div class="card h-100 shadow-sm border-0">
-                                <div class="position-relative">
+                            <div class="product-card section-fade-up stagger-animation">
+                                <div class="product-image-wrapper">
                                     @if($product->images && count($product->images) > 0)
                                         <img src="{{ asset('storage/' . $product->images->first()->image_path) }}" 
-                                             class="card-img-top" 
-                                             alt="{{ $product->name }}" 
-                                             style="height: 200px; object-fit: cover;">
+                                             class="product-image" 
+                                             alt="{{ $product->name }}">
                                     @else
-                                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
-                                             style="height: 200px;">
+                                        <div class="product-image bg-light d-flex align-items-center justify-content-center">
                                             <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
                                         </div>
                                     @endif
+                                    <div class="product-overlay"></div>
                                     @if($product->is_featured)
                                         <span class="position-absolute top-0 start-0 badge bg-warning m-2">
                                             <i class="bi bi-star-fill"></i> Featured
                                         </span>
                                     @endif
                                 </div>
-                                <div class="card-body d-flex flex-column">
+                                <div class="card-body p-4">
                                     <div class="mb-2">
-                                        <small class="text-muted">{{ $product->category->name ?? 'Laminate' }}</small>
+                                        <span class="badge bg-light text-primary">{{ $product->category->name ?? 'Laminate' }}</span>
                                     </div>
-                                    <h5 class="card-title">{{ $product->name }}</h5>
-                                    <p class="card-text text-muted small flex-grow-1">
+                                    <h5 class="card-title mb-3">{{ $product->name }}</h5>
+                                    <p class="card-text text-muted small mb-4">
                                         {{ Str::limit($product->description, 60) }}
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center mt-auto">
@@ -514,7 +520,10 @@
                                         @else
                                             <span class="text-muted">Price on request</span>
                                         @endif
-                                        <small class="text-muted">{{ $product->product_code }}</small>
+                                        <a href="{{ route('products.show', $product->slug) }}" 
+                                           class="btn btn-outline-primary btn-sm">
+                                            View Details
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -540,7 +549,7 @@
     </section>
 
     <!-- Brands Section -->
-    <section class="py-5">
+    <section class="py-5 reveal-section">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="section-title">Our Trusted Brands</h2>
@@ -550,23 +559,23 @@
                 <div class="row g-4 justify-content-center align-items-center">
                     @foreach($brands as $brand)
                         <div class="col-6 col-md-4 col-lg-3">
-                            <div class="card border-0 shadow-sm h-100">
-                                <div class="card-body text-center p-4">
+                            <div class="brand-card section-fade-up stagger-animation">
+                                <div class="text-center">
                                     @if($brand->logo)
                                         <img src="{{ asset('storage/' . $brand->logo) }}" 
                                              alt="{{ $brand->name }}" 
-                                             class="img-fluid mb-3"
+                                             class="brand-logo img-fluid mb-4"
                                              style="max-height: 80px; object-fit: contain;">
                                     @else
-                                        <div class="bg-light rounded d-flex align-items-center justify-content-center mb-3" 
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-center mb-4" 
                                              style="height: 80px;">
                                             <i class="bi bi-building text-muted" style="font-size: 2rem;"></i>
                                         </div>
                                     @endif
-                                    <h5 class="card-title">{{ $brand->name }}</h5>
-                                    <p class="card-text small text-muted mb-3">{{ Str::limit($brand->description, 100) }}</p>
-                                    <div class="small text-muted">
-                                        <i class="bi bi-box"></i> {{ $brand->products->count() }} Products
+                                    <h5 class="brand-name mb-3">{{ $brand->name }}</h5>
+                                    <p class="brand-description text-muted mb-3">{{ Str::limit($brand->description, 100) }}</p>
+                                    <div class="badge bg-light text-primary">
+                                        <i class="bi bi-box me-1"></i> {{ $brand->products->count() }} Products
                                     </div>
                                 </div>
                             </div>
@@ -586,7 +595,7 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="stats-section">
+    <section class="stats-section reveal-section">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-6">
@@ -618,7 +627,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="py-5">
+    <section class="py-5 reveal-section">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -672,30 +681,91 @@
                     prevEl: '.swiper-button-prev'
                 }
             });
-            // Animate elements when they enter the viewport
-            const observer = new IntersectionObserver((entries) => {
+
+            // Section Reveal Animation
+            const revealSection = (entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
+                        
+                        // Trigger animations for children after parent section is revealed
+                        setTimeout(() => {
+                            const animatedElements = entry.target.querySelectorAll(
+                                '.section-fade-up, .category-card, .product-card, .brand-card, .stat-item'
+                            );
+                            
+                            animatedElements.forEach((el, index) => {
+                                el.style.transitionDelay = `${index * 0.1}s`;
+                                setTimeout(() => {
+                                    el.classList.add('active');
+                                }, 100);
+                            });
+
+                            // Animate section title
+                            const sectionTitle = entry.target.querySelector('.section-title');
+                            if (sectionTitle) {
+                                setTimeout(() => {
+                                    sectionTitle.classList.add('active');
+                                }, 200);
+                            }
+                        }, 300);
+
+                        // Start counter animation if it's the stats section
+                        if (entry.target.classList.contains('stats-section')) {
+                            animateCounters(entry.target);
+                        }
+
+                        // Unobserve after animation
+                        observer.unobserve(entry.target);
                     }
                 });
-            }, {
-                threshold: 0.1
+            };
+
+            // Create the observer
+            const sectionObserver = new IntersectionObserver(revealSection, {
+                root: null,
+                rootMargin: '-50px',
+                threshold: 0.15
             });
 
-            // Observe all elements with animate class
-            document.querySelectorAll('.animate, .category-card, .stat-item').forEach((el) => {
-                observer.observe(el);
+            // Observe all sections
+            document.querySelectorAll('.reveal-section').forEach(section => {
+                sectionObserver.observe(section);
             });
 
-            // Add stagger delay to category cards
-            document.querySelectorAll('.category-card').forEach((card, index) => {
-                card.style.transitionDelay = `${index * 0.1}s`;
-            });
+            // Counter animation function
+            function animateCounters(section) {
+                section.querySelectorAll('.stat-number').forEach(stat => {
+                    const target = parseFloat(stat.textContent);
+                    const suffix = stat.textContent.replace(/[0-9.+]/g, '');
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        const increment = target / 50;
+                        if (current < target) {
+                            current += increment;
+                            if (current > target) current = target;
+                            stat.textContent = Math.floor(current) + suffix;
+                            requestAnimationFrame(updateCounter);
+                        }
+                    };
 
-            // Add stagger delay to stat items
-            document.querySelectorAll('.stat-item').forEach((stat, index) => {
-                stat.style.transitionDelay = `${index * 0.1}s`;
+                    setTimeout(updateCounter, 400);
+                });
+            }
+
+            // Add smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
             });
         });
     </script>

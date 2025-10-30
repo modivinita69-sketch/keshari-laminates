@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductCatalog;
+use App\Models\CompanyInfo;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -103,7 +104,11 @@ class ProductController extends Controller
             ->take(4)
             ->get();
 
-        return view('product-detail', compact('product', 'related_products'));
+        $phone = CompanyInfo::getValue('phone', '+91 98765 43210');
+        // Remove any spaces or special characters for WhatsApp link
+        $whatsapp_number = preg_replace('/[^0-9+]/', '', $phone);
+        
+        return view('product-detail', compact('product', 'related_products', 'phone', 'whatsapp_number'));
     }
 
     public function category($path)

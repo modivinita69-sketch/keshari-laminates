@@ -150,10 +150,10 @@
 
                 <!-- Action Buttons -->
                 <div class="d-grid gap-2 d-md-flex mb-4">
-                    <a href="tel:+919876543210" class="btn btn-primary btn-lg flex-fill">
+                    <a href="tel:{{ $phone }}" class="btn btn-primary btn-lg flex-fill">
                         <i class="bi bi-telephone"></i> Call for Quote
                     </a>
-                    <a href="https://wa.me/919876543210?text=Hi, I'm interested in {{ urlencode($product->name) }}" 
+                    <a href="https://wa.me/{{ $whatsapp_number }}?text=Hi, I'm interested in {{ urlencode($product->name) }}" 
                        target="_blank" class="btn btn-success btn-lg flex-fill">
                         <i class="bi bi-whatsapp"></i> WhatsApp
                     </a>

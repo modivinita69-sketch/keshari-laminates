@@ -5,7 +5,7 @@
     overflow: hidden;
     margin-top: -76px; /* Offset for navbar height */
     height: 100vh;
-    min-height: 800px;
+    min-height: 500px;
     display: flex;
     align-items: center;
     background: #000;
@@ -56,7 +56,7 @@
 
 .slide-content {
     position: absolute;
-    bottom: 40%;
+    bottom: 50%;
     left: 0;
     width: 100%;
     z-index: 3;
@@ -65,6 +65,7 @@
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.8s ease;
+    padding: 0 15px;
 }
 
 .swiper-slide-active .slide-content {
@@ -181,5 +182,80 @@
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        margin-top: -56px; /* Adjust for smaller navbar on mobile */
+        min-height: 400px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .slide-title {
+        font-size: 1.8rem;
+    }
+
+    .slide-subtitle {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+
+    .hero-slider .swiper-button-next,
+    .hero-slider .swiper-button-prev {
+        width: 35px;
+        height: 35px;
+    }
+
+    .hero-slider .swiper-button-next:after,
+    .hero-slider .swiper-button-prev:after {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section {
+        min-height: 350px;
+    }
+
+    .hero-content {
+        padding: 15px;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .slide-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .slide-content {
+        bottom: 45%;
+    }
+
+    .hero-slider .swiper-button-next,
+    .hero-slider .swiper-button-prev {
+        display: none;
+    }
+
+    .hero-content .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .hero-content .d-flex {
+        flex-direction: column;
     }
 }

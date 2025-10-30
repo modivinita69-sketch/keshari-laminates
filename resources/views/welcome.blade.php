@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="{{ asset('css/sections.css') }}">
     <link rel="stylesheet" href="{{ asset('css/reveal.css') }}">
     <style>
+        :root {
+            --primary-color: #F97316;
+            --primary-color-rgb: 249, 115, 22;
+            --secondary-color: #FB923C;
+            --secondary-color-rgb: 251, 146, 60;
+            --primary-orange: #F97316;
+            --secondary-orange: #FB923C;
+        }
         /* Hero Slider         <!-- Background Slider -->
         <div class="hero-slider swiper">
             <div class="swiper-wrapper">
@@ -655,7 +663,8 @@
     </section>
 
     <!-- Add Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intersection-observer/1.0.0/intersection-observer.min.js" defer></script>
     
     <!-- Animation JavaScript -->
     <script>

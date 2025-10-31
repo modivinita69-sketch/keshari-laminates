@@ -8,6 +8,16 @@ class ThemeSetting extends Model
 {
     protected $fillable = ['key', 'value', 'group'];
 
+    /**
+     * Increment theme version to bust cache
+     */
+    public static function incrementVersion()
+    {
+        $versionFile = storage_path('framework/theme-version.txt');
+        $version = file_exists($versionFile) ? (int)file_get_contents($versionFile) : 0;
+        file_put_contents($versionFile, $version + 1);
+    }
+
     public static function getThemeColors()
     {
         $defaults = [

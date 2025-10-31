@@ -6,17 +6,10 @@
     <!-- Add Swiper's CSS and Animate.css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="{{ route('theme.css') }}?v={{ md5(serialize(\App\Models\ThemeSetting::getThemeColors())) }}">
     <link rel="stylesheet" href="{{ asset('css/sections.css') }}">
     <link rel="stylesheet" href="{{ asset('css/reveal.css') }}">
     <style>
-        :root {
-            --primary-color: #F97316;
-            --primary-color-rgb: 249, 115, 22;
-            --secondary-color: #FB923C;
-            --secondary-color-rgb: 251, 146, 60;
-            --primary-orange: #F97316;
-            --secondary-orange: #FB923C;
-        }
         /* Hero Slider         <!-- Background Slider -->
         <div class="hero-slider swiper">
             <div class="swiper-wrapper">
@@ -64,6 +57,13 @@
             opacity: 0.6;
         }
 
+        @media (max-width: 768px) {
+            .hero-slider .swiper-slide img {
+                object-position: center;
+                height: 400px;
+            }
+        }
+
         .hero-slider::after {
             content: '';
             position: absolute;
@@ -72,8 +72,8 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg, 
-                rgba(0, 0, 0, 0.7) 0%, 
-                rgba(0, 0, 0, 0.5) 100%);
+                rgba(0, 0, 0, 0.8) 0%, 
+                rgba(0, 0, 0, 0.6) 100%);
             z-index: 1;
         }
 
@@ -194,33 +194,108 @@
 
         .hero-section {
             color: white;
-            padding: 100px 0;
+            padding: 60px 0 70px;
             position: relative;
             overflow: hidden;
             margin-top: 0;
-            min-height: 600px;
+            min-height: 500px;
             display: flex;
             align-items: center;
             background: #000;
         }
 
-        .hero-content {
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 40px 0;
+                min-height: 400px;
+            }
+        }
+
+        .hero-scroll-container {
             position: relative;
             z-index: 2;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .hero-slides {
+            width: 100%;
+        }
+
+        .hero-content {
+            position: relative;
+            padding: 2rem 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            width: 100%;
+            display: inline-block;
+            white-space: normal;
+        }
+
+        .btn-group-horizontal {
+            display: flex;
+            gap: 1rem;
+            padding: 0.5rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .btn-group-horizontal::-webkit-scrollbar {
+            display: none;
+        }
+
+        .btn-group-horizontal .btn {
+            flex: 0 0 auto;
+            white-space: nowrap;
+            padding: 0.8rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                padding: 3rem 2rem;
+                margin: 0 auto;
+                max-width: 800px;
+            }
+
+            .btn-group-horizontal {
+                justify-content: center;
+                overflow: visible;
+            }
         }
 
         .hero-content h1 {
             animation: fadeInRight 1s ease-out;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: calc(1.8rem + 2vw);
+            line-height: 1.2;
+            margin-bottom: 1rem;
         }
 
         .hero-content p {
             animation: fadeInRight 1s ease-out 0.2s backwards;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            font-size: calc(1rem + 0.5vw);
+            line-height: 1.5;
         }
 
         .hero-content .btn {
             animation: fadeInRight 1s ease-out 0.4s backwards;
+            margin: 0.5rem;
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .hero-content .btn {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
         }
 
         .hero-image {
@@ -353,6 +428,19 @@
         .footer a:hover {
             color: var(--secondary-orange);
         }
+
+        .bg-primary-light {
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+        }
+
+        .badge {
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .rounded-pill {
+            border-radius: 50rem !important;
+        }
     </style>
 @endpush
 
@@ -392,32 +480,40 @@
             @endif
         </div>
 
-        <div class="container hero-content">
-            <div class="row justify-content-center text-center">
-                <div class="col-lg-8">
-                    <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeInUp">
-                        {{ $company_info['hero_title'] ?? 'Premium Quality Laminates' }}
-                    </h1>
-                    <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">
-                        {{ $company_info['hero_subtitle'] ?? 'Wholesale distributor of premium laminates, bells, promica, and decor plys for all your interior design needs.' }}
-                    </p>
-                    <div class="d-flex flex-wrap gap-3 justify-content-center animate__animated animate__fadeInUp animate__delay-2s">
-                        <a href="/products" class="btn btn-primary-orange btn-lg hover-scale px-4 py-3">
-                            <i class="bi bi-box me-2"></i>View Products
-                        </a>
-                        <a href="/contact" class="btn btn-outline-light btn-lg hover-scale px-4 py-3">
-                            <i class="bi bi-telephone me-2"></i>Get Quote
-                        </a>
+        <div class="hero-scroll-container">
+            <div class="hero-slides swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="hero-content text-center">
+                            <h1 class="fw-bold mb-4 animate__animated animate__fadeInUp">
+                                {{ $company_info['hero_title'] ?? 'Premium Quality Laminates' }}
+                            </h1>
+                            <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+                                {{ $company_info['hero_subtitle'] ?? 'Wholesale distributor of premium laminates, bells, promica, and decor plys for all your interior design needs.' }}
+                            </p>
+                            <div class="btn-group-horizontal animate__animated animate__fadeInUp animate__delay-2s">
+                                <a href="/products" class="btn btn-primary-orange btn-lg hover-scale">
+                                    <i class="bi bi-box me-2"></i>View Products
+                                </a>
+                                <a href="/contact" class="btn btn-outline-light btn-lg hover-scale">
+                                    <i class="bi bi-telephone me-2"></i>Get Quote
+                                </a>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Categories Section -->
-    <section class="py-5 reveal-section">
+    <section class="pt-5 pb-5 reveal-section" style="margin-top: -20px;">
         <div class="container">
-            <div class="text-center mb-5 animate">
+            <div class="text-center mb-5">
+                <span class="badge bg-primary-light text-primary mb-2 px-3 py-2 rounded-pill">Shop by Categories</span>
                 <h2 class="section-title">Our Product Categories</h2>
                 <p class="lead text-muted">Explore our wide range of premium laminate categories</p>
             </div>
@@ -427,34 +523,43 @@
                     @foreach($leaf_categories as $category)
                         <div class="col-md-6 col-lg-4">
                             <div class="category-card section-fade-up stagger-animation">
-                                <div class="category-icon">
-                                    @switch(strtolower($category->name))
-                                        @case('plain/solid laminates')
-                                        @case('plain/solid')
-                                            <i class="bi bi-square"></i>
-                                            @break
-                                        @case('wooden laminates')
-                                        @case('wooden')
-                                            <i class="bi bi-tree"></i>
-                                            @break
-                                        @case('abstract laminates')
-                                        @case('abstract')
-                                            <i class="bi bi-palette"></i>
-                                            @break
-                                        @case('decor plys')
-                                            <i class="bi bi-layers"></i>
-                                            @break
-                                        @case('bell laminates')
-                                        @case('bell')
-                                            <i class="bi bi-bell"></i>
-                                            @break
-                                        @case('promica laminates')
-                                        @case('promica')
-                                            <i class="bi bi-award"></i>
-                                            @break
-                                        @default
-                                            <i class="bi bi-grid"></i>
-                                    @endswitch
+                                <div class="category-image">
+                                    @if($category->image)
+                                        <img src="{{ asset($category->image) }}" 
+                                             alt="{{ $category->name }}" 
+                                             class="img-fluid"
+                                             onerror="this.onerror=null; this.src='{{ asset('images/placeholder.jpg') }}';">
+                                    @else
+                                        <div class="category-icon">
+                                            @switch(strtolower($category->name))
+                                                @case('plain/solid laminates')
+                                                @case('plain/solid')
+                                                    <i class="bi bi-square"></i>
+                                                    @break
+                                                @case('wooden laminates')
+                                                @case('wooden')
+                                                    <i class="bi bi-tree"></i>
+                                                    @break
+                                                @case('abstract laminates')
+                                                @case('abstract')
+                                                    <i class="bi bi-palette"></i>
+                                                    @break
+                                                @case('decor plys')
+                                                    <i class="bi bi-layers"></i>
+                                                    @break
+                                                @case('bell laminates')
+                                                @case('bell')
+                                                    <i class="bi bi-bell"></i>
+                                                    @break
+                                                @case('promica laminates')
+                                                @case('promica')
+                                                    <i class="bi bi-award"></i>
+                                                    @break
+                                                @default
+                                                    <i class="bi bi-grid"></i>
+                                            @endswitch
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="category-content p-4">
                                     <h4>{{ $category->name }}</h4>
@@ -489,6 +594,7 @@
     <section class="py-5 bg-light reveal-section">
         <div class="container">
             <div class="text-center mb-5">
+                <span class="badge bg-primary-light text-primary mb-2 px-3 py-2 rounded-pill">Featured Collection</span>
                 <h2 class="section-title">Featured Products</h2>
                 <p class="lead text-muted">Discover our most popular and premium laminate products</p>
             </div>
@@ -669,7 +775,7 @@
     <!-- Animation JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Swiper
+            // Initialize Background Slider
             const heroSlider = new Swiper('.hero-slider', {
                 effect: 'fade',
                 speed: 1500,
@@ -688,6 +794,19 @@
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev'
+                }
+            });
+
+            // Initialize Hero Content Slider
+            const heroContentSlider = new Swiper('.hero-slides', {
+                direction: 'horizontal',
+                slidesPerView: 'auto',
+                freeMode: true,
+                grabCursor: true,
+                mousewheel: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
                 }
             });
 

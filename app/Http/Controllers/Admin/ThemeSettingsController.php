@@ -33,6 +33,9 @@ class ThemeSettingsController extends Controller
             );
         }
 
+        // Increment theme version to bust cache
+        ThemeSetting::incrementVersion();
+
         return redirect()
             ->route('admin.theme-settings.index')
             ->with('success', 'Theme colors updated successfully!');

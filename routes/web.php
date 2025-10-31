@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CompanyInfoController;
 
 // Theme CSS
-Route::get('/css/theme.css', [ThemeController::class, 'css'])->name('theme.css');
+Route::get('/css/theme.css', [ThemeController::class, 'css'])
+    ->name('theme.css')
+    ->middleware('cache.headers:public;max_age=31536000;etag');
 
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');

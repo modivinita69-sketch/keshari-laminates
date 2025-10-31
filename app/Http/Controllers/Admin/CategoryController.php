@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -37,6 +39,23 @@ class CategoryController extends Controller
         return view('admin.categories.create', compact('parentCategories'));
     }
 
+    private function handleImage($image)
+    {
+        // Generate a unique file name
+        $fileName = time() . '_' . Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $image->getClientOriginalExtension();
+        
+        // Ensure the directory exists
+        $path = public_path('images/categories');
+        if (!File::isDirectory($path)) {
+            File::makeDirectory($path, 0777, true);
+        }
+        
+        // Move the file to the destination path
+        $image->move($path, $fileName);
+        
+        return 'images/categories/' . $fileName;
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -46,6 +65,7 @@ class CategoryController extends Controller
             'parent_id' => 'nullable|exists:categories,id',
             'sort_order' => 'integer|min:0',
             'is_active' => 'boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->all();
@@ -61,6 +81,17 @@ class CategoryController extends Controller
             $data['level'] = $parent->level + 1;
         } else {
             $data['level'] = 0;
+        }
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            try {
+                $data['image'] = $this->handleImage($request->file('image'));
+            } catch (\Exception $e) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Failed to upload image. Please try again.');
+            }
         }
 
         $category = Category::create($data);
@@ -99,6 +130,7 @@ class CategoryController extends Controller
             'parent_id' => 'nullable|exists:categories,id',
             'sort_order' => 'integer|min:0',
             'is_active' => 'boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->all();
@@ -109,6 +141,22 @@ class CategoryController extends Controller
             $data['level'] = $parent->level + 1;
         } else {
             $data['level'] = 0;
+        }
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            try {
+                // Delete old image if exists
+                if ($category->image && File::exists(public_path($category->image))) {
+                    File::delete(public_path($category->image));
+                }
+
+                $data['image'] = $this->handleImage($request->file('image'));
+            } catch (\Exception $e) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Failed to upload image. Please try again.');
+            }
         }
 
         $category->update($data);
@@ -128,6 +176,11 @@ class CategoryController extends Controller
         if ($category->products()->count() > 0) {
             return redirect()->route('admin.categories.index')
                 ->with('error', 'Cannot delete category with products.');
+        }
+
+        // Delete category image if exists
+        if ($category->image && File::exists(public_path($category->image))) {
+            File::delete(public_path($category->image));
         }
 
         $category->delete();

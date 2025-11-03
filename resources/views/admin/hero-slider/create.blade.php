@@ -26,9 +26,25 @@
         </a>
     </div>
 
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="card">
         <div class="card-body">
-            <form action="{{ isset($slider) ? route('admin.hero-slider.update', $slider) : route('admin.hero-slider.store') }}" 
+            <form action="{{ route('admin.hero-slider.store') }}" 
                   method="POST" 
                   enctype="multipart/form-data">
                 @csrf

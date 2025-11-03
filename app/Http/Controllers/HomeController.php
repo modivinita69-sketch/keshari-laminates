@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\CompanyInfo;
 use App\Models\HeroSlider;
+use App\Models\Catalog;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -46,6 +47,11 @@ class HomeController extends Controller
             ->orderBy('name')
             ->get();
 
+        // Get active catalogs
+        $catalogs = Catalog::where('is_active', true)
+            ->latest()
+            ->get();
+
         // Get company information (with fallbacks)
         $company_info = [
             'about_us' => CompanyInfo::getValue('about_us', 'Keshari Laminates - Your trusted partner in quality laminates'),
@@ -53,7 +59,7 @@ class HomeController extends Controller
             'hero_subtitle' => CompanyInfo::getValue('hero_subtitle', 'Wholesale distributor of premium laminates, bells, promica, and decor plys'),
         ];
 
-        return view('welcome', compact('featured_products', 'categories', 'leaf_categories', 'company_info', 'brands', 'hero_slides'));
+        return view('welcome', compact('featured_products', 'categories', 'leaf_categories', 'company_info', 'brands', 'hero_slides', 'catalogs'));
     }
 
     public function about()

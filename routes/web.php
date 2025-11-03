@@ -32,7 +32,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [AdminAuthController::class, 'login']);
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
     
-    // Protected admin routes (with auth:admin middleware)
+    // Load catalog routes
+require __DIR__ . '/web-catalogs.php';
+
+// Protected admin routes (with auth:admin middleware)
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
         
@@ -87,6 +90,8 @@ Route::prefix('admin')->group(function () {
             'edit' => 'admin.hero-slider.edit',
             'update' => 'admin.hero-slider.update',
             'destroy' => 'admin.hero-slider.destroy'
+        ])->parameters([
+            'hero-slider' => 'slider'
         ]);
         Route::post('/hero-slider/update-order', [\App\Http\Controllers\Admin\HeroSliderController::class, 'updateOrder'])
             ->name('admin.hero-slider.update-order');

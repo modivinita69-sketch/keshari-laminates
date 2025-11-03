@@ -193,43 +193,31 @@
         .delay-4 { animation-delay: 0.4s; }
 
         .hero-section {
-            color: white;
-            padding: 60px 0 70px;
             position: relative;
             overflow: hidden;
             margin-top: 0;
-            min-height: 500px;
-            display: flex;
-            align-items: center;
+            height: 80vh;
+            min-height: 400px;
             background: #000;
         }
 
         @media (max-width: 768px) {
             .hero-section {
-                padding: 40px 0;
-                min-height: 400px;
+                height: 50vh;
+                min-height: 300px;
             }
         }
 
-        .hero-scroll-container {
+        .hero-content-section {
             position: relative;
             z-index: 2;
-            width: 100%;
-            overflow: hidden;
+            background: var(--primary-color);
         }
 
-        .hero-slides {
-            width: 100%;
-        }
-
-        .hero-content {
-            position: relative;
-            padding: 2rem 1rem;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-            width: 100%;
-            display: inline-block;
-            white-space: normal;
+        @media (max-width: 768px) {
+            .hero-content-section {
+                padding: 2rem 0;
+            }
         }
 
         .btn-group-horizontal {
@@ -447,7 +435,7 @@
 @section('content')
     <!-- Hero Section -->
     <section class="hero-section">
-        <!-- Background Slider -->
+        <!-- Full Width Slider -->
         <div class="hero-slider swiper">
             <div class="swiper-wrapper">
                 @forelse($hero_slides as $slide)
@@ -458,12 +446,6 @@
                              title="{{ $slide->title }} - {{ $slide->subtitle }}"
                              @endif
                         >
-                        <div class="slide-content">
-                            <div class="container">
-                                <h2 class="slide-title">{{ $slide->title }}</h2>
-                                <p class="slide-subtitle">{{ $slide->subtitle }}</p>
-                            </div>
-                        </div>
                     </div>
                 @empty
                     <div class="swiper-slide">
@@ -479,31 +461,25 @@
             <div class="swiper-button-next"></div>
             @endif
         </div>
+    </section>
 
-        <div class="hero-scroll-container">
-            <div class="hero-slides swiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="hero-content text-center">
-                            <h1 class="fw-bold mb-4 animate__animated animate__fadeInUp">
-                                {{ $company_info['hero_title'] ?? 'Premium Quality Laminates' }}
-                            </h1>
-                            <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">
-                                {{ $company_info['hero_subtitle'] ?? 'Wholesale distributor of premium laminates, bells, promica, and decor plys for all your interior design needs.' }}
-                            </p>
-                            <div class="btn-group-horizontal animate__animated animate__fadeInUp animate__delay-2s">
-                                <a href="/products" class="btn btn-primary-orange btn-lg hover-scale">
-                                    <i class="bi bi-box me-2"></i>View Products
-                                </a>
-                                <a href="/contact" class="btn btn-outline-light btn-lg hover-scale">
-                                    <i class="bi bi-telephone me-2"></i>Get Quote
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
+    <!-- Hero Content Section -->
+    <section class="hero-content-section py-5 bg-primary text-white">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="fw-bold mb-4 animate__animated animate__fadeInUp">
+                    {{ $company_info['hero_title'] ?? 'Premium Quality Laminates' }}
+                </h1>
+                <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+                    {{ $company_info['hero_subtitle'] ?? 'Wholesale distributor of premium laminates, bells, promica, and decor plys for all your interior design needs.' }}
+                </p>
+                <div class="btn-group-horizontal animate__animated animate__fadeInUp animate__delay-2s">
+                    <a href="/products" class="btn btn-light btn-lg hover-scale">
+                        <i class="bi bi-box me-2"></i>View Products
+                    </a>
+                    <a href="/contact" class="btn btn-outline-light btn-lg hover-scale">
+                        <i class="bi bi-telephone me-2"></i>Get Quote
+                    </a>
                 </div>
             </div>
         </div>
@@ -703,6 +679,67 @@
                     </div>
                     <h4>Brands Coming Soon</h4>
                     <p class="text-muted">Our brand partners will be displayed here soon.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
+    <!-- Catalogs Section -->
+    <section class="py-5 reveal-section bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge bg-primary-light text-primary mb-2 px-3 py-2 rounded-pill">Product Catalogs</span>
+                <h2 class="section-title">Download Our Catalogs</h2>
+                <p class="lead text-muted">Browse through our comprehensive product catalogs</p>
+            </div>
+
+            @if($catalogs && count($catalogs) > 0)
+                <div class="row g-4">
+                    @foreach($catalogs as $catalog)
+                        <div class="col-md-6 col-lg-4">
+                            <div class="catalog-card section-fade-up stagger-animation">
+                                <div class="card h-100">
+                                    <div class="catalog-thumbnail">
+                                        @if($catalog->thumbnail_path)
+                                            <img src="{{ asset('storage/' . $catalog->thumbnail_path) }}" 
+                                                 class="card-img-top" 
+                                                 alt="{{ $catalog->title }}"
+                                                 style="height: 200px; object-fit: cover;">
+                                        @else
+                                            <div class="text-center p-4 bg-light">
+                                                <i class="bi bi-file-pdf text-primary" style="font-size: 4rem;"></i>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $catalog->title }}</h5>
+                                        @if($catalog->description)
+                                            <p class="card-text text-muted">{{ $catalog->description }}</p>
+                                        @endif
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <span class="text-muted small">
+                                                <i class="bi bi-download"></i> 
+                                                {{ $catalog->download_count }} downloads
+                                            </span>
+                                            <a href="{{ route('catalogs.download', $catalog) }}" 
+                                               class="btn btn-primary"
+                                               target="_blank">
+                                                <i class="bi bi-download me-2"></i>Download
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center">
+                    <div class="mb-4">
+                        <i class="bi bi-file-pdf" style="font-size: 4rem; color: var(--primary-orange); opacity: 0.5;"></i>
+                    </div>
+                    <h4>Catalogs Coming Soon</h4>
+                    <p class="lead text-muted">Our product catalogs will be available for download soon.</p>
                 </div>
             @endif
         </div>

@@ -54,7 +54,7 @@
                                         <i class="bi bi-grip-vertical drag-handle"></i>
                                     </td>
                                     <td>
-                                        <img src="{{ asset($slide->image_path) }}" 
+                                        <img style="width:70px;height:50px" src="{{ asset($slide->image_path) }}" 
                                              alt="{{ $slide->title }}" 
                                              class="slider-preview">
                                     </td>

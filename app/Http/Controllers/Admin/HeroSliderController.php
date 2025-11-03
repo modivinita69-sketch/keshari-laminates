@@ -22,32 +22,73 @@ class HeroSliderController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'title' => 'nullable|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
-            'sort_order' => 'nullable|integer|min:0',
-            'is_active' => 'boolean'
-        ]);
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('images/slider'), $filename);
-            
-            HeroSlider::create([
-                'image_path' => 'images/slider/' . $filename,
-                'title' => $request->title,
-                'subtitle' => $request->subtitle,
-                'sort_order' => $request->sort_order ?? 0,
-                'is_active' => $request->has('is_active')
+        try {
+            $validated = $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'title' => 'nullable|string|max:255',
+                'subtitle' => 'nullable|string|max:255',
+                'sort_order' => 'nullable|integer|min:0'
             ]);
 
-            return redirect()->route('admin.hero-slider.index')
-                ->with('success', 'Slider image added successfully');
-        }
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                
+                // Create directory if it doesn't exist
+                $uploadPath = public_path('images/slider');
+                if (!file_exists($uploadPath)) {
+                    if (!mkdir($uploadPath, 0777, true)) {
+                        throw new \Exception('Failed to create upload directory');
+                    }
+                }
 
-        return back()->with('error', 'Please upload an image');
+                // Generate filename
+                $filename = time() . '_' . str_replace(' ', '_', $image->getClientOriginalName());
+                $fullPath = $uploadPath . DIRECTORY_SEPARATOR . $filename;
+                
+                // Move the file
+                if (!$image->move($uploadPath, $filename)) {
+                    throw new \Exception('Failed to move uploaded file');
+                }
+
+                // Verify file exists after upload
+                if (!file_exists($fullPath)) {
+                    throw new \Exception('File not found after upload');
+                }
+
+                // Create the slider record
+                $data = [
+                    'image_path' => 'images/slider/' . $filename,
+                    'title' => $request->title,
+                    'subtitle' => $request->subtitle,
+                    'sort_order' => $request->input('sort_order', 0),
+                    'is_active' => true
+                ];
+
+                $slider = HeroSlider::create($data);
+                
+                if (!$slider) {
+                    // If slider creation fails, remove the uploaded file
+                    @unlink($fullPath);
+                    throw new \Exception('Failed to create slider record in database');
+                }
+
+                return redirect()
+                    ->route('admin.hero-slider.index')
+                    ->with('success', 'Slider image added successfully');
+            }
+
+            return back()
+                ->withInput()
+                ->with('error', 'Please upload an image');
+                
+        } catch (\Exception $e) {
+            \Log::error('Error adding slider: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            
+            return back()
+                ->withInput()
+                ->with('error', 'Error: ' . $e->getMessage());
+        }
     }
 
     public function edit(HeroSlider $slider)
@@ -55,7 +96,7 @@ class HeroSliderController extends Controller
         return view('admin.hero-slider.edit', compact('slider'));
     }
 
-    public function update(Request $request, HeroSlider $slider)
+    public function update(Request $request, HeroSlider $slider) // The $slider parameter name must match the route parameter
     {
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',

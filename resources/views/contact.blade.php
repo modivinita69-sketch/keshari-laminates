@@ -8,6 +8,46 @@
         border: none;
         box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.1);
     }
+
+    .branch-info {
+        position: relative;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .branch-info:hover {
+        background-color: rgba(var(--primary-color-rgb), 0.05);
+    }
+
+    .branch-info h5 {
+        font-weight: 600;
+        position: relative;
+        display: inline-block;
+    }
+
+    .branch-info h5::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--primary-color);
+    }
+
+    .common-info {
+        background-color: rgba(var(--primary-color-rgb), 0.02);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .branch-info {
+            padding: 0.5rem;
+        }
+    }
 </style>
 @endsection
 
@@ -78,14 +118,16 @@
             <div class="col-lg-4">
                 <div class="card contact-card h-100">
                     <div class="card-body p-4">
-                        <h3 class="section-title mb-4">Contact Information</h3>
+                        <h3 class="section-title mb-4">Our Locations</h3>
                         
-                        <div class="mb-4">
+                        <!-- Branch 1 -->
+                        <div class="branch-info mb-4">
+                            <h5 class="text-primary mb-3">Main Branch</h5>
                             <div class="d-flex align-items-center mb-3">
                                 <i class="bi bi-geo-alt text-primary me-3" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <h6 class="mb-1">Address</h6>
-                                    <p class="mb-0 text-muted">{{ $contact_info['address'] ?? 'Industrial Area, Your City, State - 123456, India' }}</p>
+                                    <p class="mb-0 text-muted">{{ $branch1['address'] ?? '123, Main Street, City Center, State - 123456' }}</p>
                                 </div>
                             </div>
                             
@@ -93,10 +135,50 @@
                                 <i class="bi bi-telephone text-primary me-3" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <h6 class="mb-1">Phone</h6>
-                                    <p class="mb-0 text-muted">{{ $contact_info['phone'] ?? '+91 98765 43210' }}</p>
+                                    <p class="mb-0 text-muted">{{ $branch1['phone'] ?? '+91 98765 43210' }}</p>
                                 </div>
                             </div>
                             
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-whatsapp text-primary me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">WhatsApp</h6>
+                                    <p class="mb-0 text-muted">{{ $branch1['whatsapp'] ?? '+91 98765 43210' }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Branch 2 -->
+                        <div class="branch-info mb-4">
+                            <div class="border-top pt-4 mb-3"></div>
+                            <h5 class="text-primary mb-3">Secondary Branch</h5>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-geo-alt text-primary me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">Address</h6>
+                                    <p class="mb-0 text-muted">{{ $branch2['address'] ?? '456, Industrial Area, City Center, State - 123456' }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-telephone text-primary me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">Phone</h6>
+                                    <p class="mb-0 text-muted">{{ $branch2['phone'] ?? '+91 98765 43211' }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-whatsapp text-primary me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-1">WhatsApp</h6>
+                                    <p class="mb-0 text-muted">{{ $branch2['whatsapp'] ?? '+91 98765 43211' }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Common Information -->
+                        <div class="common-info border-top pt-4">
                             <div class="d-flex align-items-center mb-3">
                                 <i class="bi bi-envelope text-primary me-3" style="font-size: 1.5rem;"></i>
                                 <div>

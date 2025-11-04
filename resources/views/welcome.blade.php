@@ -685,7 +685,7 @@
     </section>
 
     <!-- Catalogs Section -->
-    <section class="py-5 reveal-section bg-light">
+    <section id="catalogs" class="py-5 reveal-section bg-light">
         <div class="container">
             <div class="text-center mb-5">
                 <span class="badge bg-primary-light text-primary mb-2 px-3 py-2 rounded-pill">Product Catalogs</span>

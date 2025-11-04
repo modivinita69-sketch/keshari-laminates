@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link href="{{ route('theme.css') }}?v={{ file_get_contents(storage_path('framework/theme-version.txt')) }}" rel="stylesheet">
     <link href="{{ asset('css/hero.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/common.css') }}" rel="stylesheet">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -106,6 +107,9 @@
                         <a class="nav-link {{ str_starts_with(Route::currentRouteName(), 'products') ? 'active' : '' }}" href="{{ route('products') }}">Products</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('catalogs.*') ? 'active' : '' }}" href="{{ route('catalogs.index') }}">Catalogs</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ Route::currentRouteName() == 'about' ? 'active' : '' }}" href="{{ route('about') }}">About Us</a>
                     </li>
                     <li class="nav-item">
@@ -123,6 +127,14 @@
     <main>
         @yield('content')
     </main>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', \App\Models\CompanyInfo::getValue('phone', '+919876543210')) }}" 
+       class="whatsapp-float" 
+       target="_blank"
+       aria-label="Chat with us on WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
 
     <!-- Footer -->
     <footer class="footer">

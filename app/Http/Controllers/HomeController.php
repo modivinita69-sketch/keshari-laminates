@@ -85,4 +85,13 @@ class HomeController extends Controller
 
         return view('contact', compact('contact_info'));
     }
+
+    /**
+     * Display all public catalogs
+     */
+    public function catalogs()
+    {
+        $catalogs = Catalog::where('is_active', true)->latest()->get();
+        return view('catalogs.index', compact('catalogs'));
+    }
 }

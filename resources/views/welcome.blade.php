@@ -751,8 +751,8 @@
             <div class="row">
                 <div class="col-md-3 col-6">
                     <div class="stat-item">
-                        <span class="stat-number">500+</span>
-                        <div class="stat-label">Products</div>
+                        <span class="stat-number">2000+</span>
+                        <div class="stat-label">designs</div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6">
@@ -763,14 +763,14 @@
                 </div>
                 <div class="col-md-3 col-6">
                     <div class="stat-item">
-                        <span class="stat-number">1000+</span>
-                        <div class="stat-label">Happy Clients</div>
+                        <span class="stat-number">1080+</span>
+                        <div class="stat-label">Happy vendors accross india</div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6">
                     <div class="stat-item">
-                        <span class="stat-number">24/7</span>
-                        <div class="stat-label">Support</div>
+                        <span class="stat-number">24 hours</span>
+                        <div class="stat-label">Support / Uninterrupted help</div>
                     </div>
                 </div>
             </div>

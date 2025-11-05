@@ -1,0 +1,51 @@
+/* Sections Reveal Animation */
+.reveal-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+}
+
+.reveal-section.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* Add some delay for children elements */
+.reveal-section.active .section-fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.3s;
+}
+
+.reveal-section.active .section-fade-up.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Section Title Animation */
+.reveal-section .section-title {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.2s;
+}
+
+.reveal-section.active .section-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger children animations */
+.reveal-section.active .stagger-animation {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-section.active .stagger-animation.active {
+    opacity: 1;
+    transform: translateY(0);
+}

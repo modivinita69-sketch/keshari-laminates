@@ -127,7 +127,7 @@
                                 <i class="bi bi-geo-alt text-primary me-3" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <h6 class="mb-1">Address</h6>
-                                    <p class="mb-0 text-muted">{{ $branch1['address'] ?? '123, Main Street, City Center, State - 123456' }}</p>
+                                    <p class="mb-0 text-muted">{{ $branch1['address'] ?? '19- 20 dwarkesh soc, Udhana - Magdalla Rd, nr. Navjivan Circle, Surat, Gujarat 395017' }}</p>
                                 </div>
                             </div>
                             
@@ -135,7 +135,7 @@
                                 <i class="bi bi-telephone text-primary me-3" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <h6 class="mb-1">Phone</h6>
-                                    <p class="mb-0 text-muted">{{ $branch1['phone'] ?? '+91 98765 43210' }}</p>
+                                    <p class="mb-0 text-muted">{{ $branch1['phone'] ?? '+91 98981 82013' }}</p>
                                 </div>
                             </div>
                             
@@ -143,7 +143,7 @@
                                 <i class="bi bi-whatsapp text-primary me-3" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <h6 class="mb-1">WhatsApp</h6>
-                                    <p class="mb-0 text-muted">{{ $branch1['whatsapp'] ?? '+91 98765 43210' }}</p>
+                                    <p class="mb-0 text-muted">{{ $branch1['whatsapp'] ?? '+91 98981 82013' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                                 <i class="bi bi-geo-alt text-primary me-3" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <h6 class="mb-1">Address</h6>
-                                    <p class="mb-0 text-muted">{{ $branch2['address'] ?? '456, Industrial Area, City Center, State - 123456' }}</p>
+                                    <p class="mb-0 text-muted">{{ $branch2['address'] ?? 'Plot no. 22, Ground floor, Shri ram nagar soc, Nr Rashi circle, Katargam, surat, 395004, Gujarat, India ' }}</p>
                                 </div>
                             </div>
                             
@@ -164,7 +164,7 @@
                                 <i class="bi bi-telephone text-primary me-3" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <h6 class="mb-1">Phone</h6>
-                                    <p class="mb-0 text-muted">{{ $branch2['phone'] ?? '+91 98765 43211' }}</p>
+                                    <p class="mb-0 text-muted">{{ $branch2['phone'] ?? '+91 98981 82013' }}</p>
                                 </div>
                             </div>
                             
@@ -172,7 +172,7 @@
                                 <i class="bi bi-whatsapp text-primary me-3" style="font-size: 1.5rem;"></i>
                                 <div>
                                     <h6 class="mb-1">WhatsApp</h6>
-                                    <p class="mb-0 text-muted">{{ $branch2['whatsapp'] ?? '+91 98765 43211' }}</p>
+                                    <p class="mb-0 text-muted">{{ $branch2['whatsapp'] ?? '+91 98981 82013' }}</p>
                                 </div>
                             </div>
                         </div>

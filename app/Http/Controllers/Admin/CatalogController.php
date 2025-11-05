@@ -42,9 +42,10 @@ class CatalogController extends Controller
         }
 
         if ($request->hasFile('thumbnail')) {
-            $thumbnail = $request->file('thumbnail');
-            $path = $thumbnail->store('catalog-thumbnails', 'public');
-            $catalog->thumbnail_path = $path;
+           $thumbnail = $request->file('thumbnail');
+            $filename = time() . '_' . $thumbnail->getClientOriginalName();
+            $thumbnail->move(public_path('storage/catalog-thumbnails'), $filename);
+            $catalog->thumbnail_path = 'catalog-thumbnails/' . $filename;
         }
 
         $catalog->save();
@@ -82,16 +83,14 @@ class CatalogController extends Controller
             $path = $file->store('catalogs', 'public');
             $catalog->file_path = $path;
         }
-
+        
+        
+        
         if ($request->hasFile('thumbnail')) {
-            // Delete old thumbnail
-            if ($catalog->thumbnail_path) {
-                Storage::disk('public')->delete($catalog->thumbnail_path);
-            }
-            
-            $thumbnail = $request->file('thumbnail');
-            $path = $thumbnail->store('catalog-thumbnails', 'public');
-            $catalog->thumbnail_path = $path;
+           $thumbnail = $request->file('thumbnail');
+            $filename = time() . '_' . $thumbnail->getClientOriginalName();
+            $thumbnail->move(public_path('storage/catalog-thumbnails'), $filename);
+            $catalog->thumbnail_path = 'catalog-thumbnails/' . $filename;
         }
 
         $catalog->save();

@@ -142,7 +142,7 @@
             <div class="row">
                 <div class="col-lg-4 mb-4">
                     <h5><i class="bi bi-building me-2"></i>Keshari Laminates</h5>
-                    <p>Your trusted partner for premium quality laminates. We provide wholesale distribution of laminates, bells, promica, and decor plys.</p>
+                    <p>Your trusted partner for premium quality laminates. We provide wholesale distribution of laminates.</p>
                     <div class="d-flex gap-3">
                         <a href="#"><i class="bi bi-facebook fs-4"></i></a>
                         <a href="#"><i class="bi bi-instagram fs-4"></i></a>
@@ -159,22 +159,14 @@
                         <li><a href="{{ route('contact') }}">Contact</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3 mb-4">
-                    <h5>Product Categories</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('products') }}?category=solid">Plain/Solid Laminates</a></li>
-                        <li><a href="{{ route('products') }}?category=wooden">Wooden Laminates</a></li>
-                        <li><a href="{{ route('products') }}?category=abstract">Abstract Laminates</a></li>
-                        <li><a href="{{ route('products') }}?category=decor">Decor Plys</a></li>
-                    </ul>
-                </div>
+                
                 <div class="col-lg-3 mb-4">
                     <h5>Contact Info</h5>
                     <ul class="list-unstyled">
-                        <li><i class="bi bi-geo-alt me-2"></i>Business Address, City</li>
-                        <li><i class="bi bi-telephone me-2"></i>+91 9876543210</li>
-                        <li><i class="bi bi-envelope me-2"></i>info@kesharilaminates.com</li>
-                        <li><i class="bi bi-clock me-2"></i>Mon-Sat: 9AM-6PM</li>
+                        <li><i class="bi bi-geo-alt me-2"></i>19- 20 dwarkesh soc, Udhana - Magdalla Rd, nr. Navjivan Circle, Surat, Gujarat 395017</li>
+                        <li><i class="bi bi-telephone me-2"></i>+91 9898182013</li>
+                        <li><i class="bi bi-envelope me-2"></i>keshariveneer@gmail.com</li>
+                        <li><i class="bi bi-clock me-2"></i>Mon-Sun: 9AM-9PM</li>
                     </ul>
                 </div>
             </div>

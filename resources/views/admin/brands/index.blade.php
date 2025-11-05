@@ -42,7 +42,7 @@
                         <tr>
                             <td>
                                 @if($brand->logo)
-                                    <img src="{{ asset('storage/' . $brand->logo) }}" 
+                                    <img src="{{ asset($brand->logo) }}" 
                                          alt="{{ $brand->name }}" 
                                          class="img-thumbnail"
                                          style="width: 50px; height: 50px; object-fit: contain;">

@@ -45,7 +45,7 @@
                     <label for="logo" class="form-label">Logo</label>
                     @if($brand->logo)
                         <div class="mb-2">
-                            <img src="{{ asset('storage/' . $brand->logo) }}" 
+                            <img src="{{ asset($brand->logo) }}" 
                                  alt="{{ $brand->name }}" 
                                  class="img-thumbnail"
                                  style="max-height: 100px;">

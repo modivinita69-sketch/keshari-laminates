@@ -44,8 +44,10 @@ class BrandController extends Controller
         $brand->is_active = $request->boolean('is_active', true);
 
         if ($request->hasFile('logo')) {
-            $path = $request->file('logo')->store('brands', 'public');
-            $brand->logo = $path;
+            $file = $request->file('logo');
+            $filename = time() . '_' . Str::slug($validated['name']) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('brands'), $filename);
+            $brand->logo = 'brands/' . $filename;
         }
 
         $brand->save();
@@ -81,10 +83,15 @@ class BrandController extends Controller
 
         if ($request->hasFile('logo')) {
             if ($brand->logo) {
-                Storage::disk('public')->delete($brand->logo);
+                $oldLogoPath = public_path($brand->logo);
+                if (file_exists($oldLogoPath)) {
+                    unlink($oldLogoPath);
+                }
             }
-            $path = $request->file('logo')->store('brands', 'public');
-            $brand->logo = $path;
+            $file = $request->file('logo');
+            $filename = time() . '_' . Str::slug($validated['name']) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('brands'), $filename);
+            $brand->logo = 'brands/' . $filename;
         }
 
         $brand->save();
@@ -98,7 +105,10 @@ class BrandController extends Controller
     public function destroy(Brand $brand)
     {
         if ($brand->logo) {
-            Storage::disk('public')->delete($brand->logo);
+            $logoPath = public_path($brand->logo);
+            if (file_exists($logoPath)) {
+                unlink($logoPath);
+            }
         }
         
         $brand->delete();

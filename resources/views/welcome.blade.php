@@ -52,15 +52,24 @@
 
         .hero-slider .swiper-slide img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            height: auto;
             opacity: 0.6;
+            display: block;
         }
 
         @media (max-width: 768px) {
             .hero-slider .swiper-slide img {
                 object-position: center;
-                height: 400px;
+                height: 100vh;
+                width: 100%;
+                object-fit: cover;
+            }
+            .hero-slider {
+                height: 100vh;
+            }
+            .hero-section {
+                height: 100vh;
             }
         }
 
@@ -203,8 +212,30 @@
 
         @media (max-width: 768px) {
             .hero-section {
-                height: 50vh;
-                min-height: 300px;
+                height: auto;
+                min-height: auto;
+            }
+            
+            .hero-slider,
+            .hero-slider .swiper-wrapper,
+            .hero-slider .swiper-slide {
+                height: auto !important;
+            }
+            
+            .hero-slider .swiper-slide img {
+                height: auto;
+                width: 100%;
+                object-fit: contain;
+                object-position: center;
+                aspect-ratio: 4/3;
+            }
+
+            .hero-slider::after {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
             }
         }
 
@@ -217,6 +248,35 @@
         @media (max-width: 768px) {
             .hero-content-section {
                 padding: 2rem 0;
+                position: relative;
+                z-index: 3;
+                background: var(--primary-color);
+            }
+            
+            .hero-content-section .container {
+                padding: 1rem;
+            }
+
+            .btn-group-horizontal {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 0.5rem;
+            }
+
+            .btn-group-horizontal .btn {
+                width: auto;
+                min-width: 200px;
+                margin: 0.5rem;
+            }
+
+            .hero-content h1 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
             }
         }
 
@@ -485,6 +545,67 @@
         </div>
     </section>
 
+    <!-- Catalogs Section -->
+    <section id="catalogs" class="py-5 reveal-section bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge bg-primary-light text-primary mb-2 px-3 py-2 rounded-pill">Product Catalogs</span>
+                <h2 class="section-title">Download Our Catalogs</h2>
+                <p class="lead text-muted">Browse through our comprehensive product catalogs</p>
+            </div>
+
+            @if($catalogs && count($catalogs) > 0)
+                <div class="row g-4">
+                    @foreach($catalogs as $catalog)
+                        <div class="col-md-6 col-lg-4">
+                            <div class="catalog-card section-fade-up stagger-animation">
+                                <div class="card h-100">
+                                    <div class="catalog-thumbnail">
+                                        @if($catalog->thumbnail_path)
+                                            <img src="{{ asset('storage/' . $catalog->thumbnail_path) }}" 
+                                                 class="card-img-top" 
+                                                 alt="{{ $catalog->title }}"
+                                                 style="height: 200px; object-fit: cover;">
+                                        @else
+                                            <div class="text-center p-4 bg-light">
+                                                <i class="bi bi-file-pdf text-primary" style="font-size: 4rem;"></i>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $catalog->title }}</h5>
+                                        @if($catalog->description)
+                                            <p class="card-text text-muted">{{ $catalog->description }}</p>
+                                        @endif
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <span class="text-muted small">
+                                                <i class="bi bi-download"></i> 
+                                                {{ $catalog->download_count }} downloads
+                                            </span>
+                                            <a href="{{ route('catalogs.download', $catalog) }}" 
+                                               class="btn btn-primary"
+                                               target="_blank">
+                                                <i class="bi bi-download me-2"></i>Download
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center">
+                    <div class="mb-4">
+                        <i class="bi bi-file-pdf" style="font-size: 4rem; color: var(--primary-orange); opacity: 0.5;"></i>
+                    </div>
+                    <h4>Catalogs Coming Soon</h4>
+                    <p class="lead text-muted">Our product catalogs will be available for download soon.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
     <!-- Categories Section -->
     <section class="pt-5 pb-5 reveal-section" style="margin-top: -20px;">
         <div class="container">
@@ -652,7 +773,7 @@
                             <div class="brand-card section-fade-up stagger-animation">
                                 <div class="text-center">
                                     @if($brand->logo)
-                                        <img src="{{ asset('storage/' . $brand->logo) }}" 
+                                        <img src="{{ asset($brand->logo) }}" 
                                              alt="{{ $brand->name }}" 
                                              class="brand-logo img-fluid mb-4"
                                              style="max-height: 80px; object-fit: contain;">
@@ -679,67 +800,6 @@
                     </div>
                     <h4>Brands Coming Soon</h4>
                     <p class="text-muted">Our brand partners will be displayed here soon.</p>
-                </div>
-            @endif
-        </div>
-    </section>
-
-    <!-- Catalogs Section -->
-    <section id="catalogs" class="py-5 reveal-section bg-light">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="badge bg-primary-light text-primary mb-2 px-3 py-2 rounded-pill">Product Catalogs</span>
-                <h2 class="section-title">Download Our Catalogs</h2>
-                <p class="lead text-muted">Browse through our comprehensive product catalogs</p>
-            </div>
-
-            @if($catalogs && count($catalogs) > 0)
-                <div class="row g-4">
-                    @foreach($catalogs as $catalog)
-                        <div class="col-md-6 col-lg-4">
-                            <div class="catalog-card section-fade-up stagger-animation">
-                                <div class="card h-100">
-                                    <div class="catalog-thumbnail">
-                                        @if($catalog->thumbnail_path)
-                                            <img src="{{ asset('storage/' . $catalog->thumbnail_path) }}" 
-                                                 class="card-img-top" 
-                                                 alt="{{ $catalog->title }}"
-                                                 style="height: 200px; object-fit: cover;">
-                                        @else
-                                            <div class="text-center p-4 bg-light">
-                                                <i class="bi bi-file-pdf text-primary" style="font-size: 4rem;"></i>
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $catalog->title }}</h5>
-                                        @if($catalog->description)
-                                            <p class="card-text text-muted">{{ $catalog->description }}</p>
-                                        @endif
-                                        <div class="d-flex justify-content-between align-items-center mt-3">
-                                            <span class="text-muted small">
-                                                <i class="bi bi-download"></i> 
-                                                {{ $catalog->download_count }} downloads
-                                            </span>
-                                            <a href="{{ route('catalogs.download', $catalog) }}" 
-                                               class="btn btn-primary"
-                                               target="_blank">
-                                                <i class="bi bi-download me-2"></i>Download
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="text-center">
-                    <div class="mb-4">
-                        <i class="bi bi-file-pdf" style="font-size: 4rem; color: var(--primary-orange); opacity: 0.5;"></i>
-                    </div>
-                    <h4>Catalogs Coming Soon</h4>
-                    <p class="lead text-muted">Our product catalogs will be available for download soon.</p>
                 </div>
             @endif
         </div>
